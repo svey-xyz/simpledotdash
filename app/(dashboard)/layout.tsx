@@ -27,7 +27,7 @@ export default async function RootLayout({
 }) {
 	const defaultTheme = "dark";
 	const cookieValue = cookies().get("theme")?.value || "";
-	const isTheme = cookieValue === defaultTheme || cookieValue === "light";
+	const isTheme = cookieValue === "dark" || cookieValue === "light";
 	const theme = isTheme ? cookieValue : defaultTheme;
 	// const theme: themeType = 'light';
 

@@ -12,11 +12,13 @@ export default async function Home() {
 		<div className="relative flex flex-col main-padding">
 
 			{(apps &&
-				<div className="">
+				<div className="mt-4">
 					<h2>Apps</h2>
-					{apps?.map((app, i, arr) => {
-						return (<AppCard app={app} key={app.title} />)
-					})}
+					<div className="my-6">
+						{apps?.map((app, i, arr) => {
+							return (<AppCard app={app} key={app.title} />)
+						})}
+					</div>
 				</div>
 			)}
 	

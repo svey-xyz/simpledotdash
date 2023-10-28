@@ -46,9 +46,8 @@
 	h1, h2, h3, h4, h5, h6 { @apply font-heading text-primary-text font-bold; }
 	h1 { @apply text-6xl ; }
 	h2 { @apply text-5xl; }
-	a { @apply underline underline-offset-2 motion-safe:hover:underline-offset-4 transition-[text-underline-offset] duration-100 visited:text-secondary-accent hover:text-primary-accent; }
+	a { }
 	p { @apply mt-2; }
 
 	.main-padding { @apply max-w-screen-2xl w-full mx-auto px-6 sm:px-12 md:px-24; }
-	.separator { @apply after:absolute after:inset-0 after:border-b-2 after:border-solid after:border-light-text; }
 }
