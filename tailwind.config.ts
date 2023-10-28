@@ -1,20 +1,69 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
-    },
-  },
-  plugins: [],
+	darkMode: 'class',
+	future: {
+		hoverOnlyWhenSupported: true,
+	},
+	content: [
+		'./app/**/*.{js,ts,jsx,tsx,mdx}',
+	],
+	theme: {
+		screens: {
+			sm: "480px",
+			md: "768px",
+			lg: "976px",
+			xl: "1200px",
+			'2xl': "1440px",
+		},
+		extend: {
+			height: {
+				'icon': 'var(--icon-size)'
+			},
+			width: {
+				'icon': 'var(--icon-size)'
+			},
+			maxWidth: {
+				'prose-full': '85ch',
+				'prose': '65ch',
+				'prose-short': '45ch'
+			},
+			margin: {
+				'1/8': '12%',
+				'1/6': '16%',
+				'1/7': '15%',
+				'1/5': '20%',
+				'1/4': '20%',
+				'1/3': '33%'
+			},
+			colors: {
+				'primary-text': 'var(--primary-text)',
+				'secondary-text': 'var(--secondary-text)',
+				'light-text': 'var(--light-text)',
+				'primary-bg': 'var(--primary-bg)',
+				'secondary-bg': 'var(--secondary-bg)',
+				'opposite-bg': 'var(--opposite-bg)',
+				'primary-accent': 'var(--primary-accent)',
+				'secondary-accent': 'var(--secondary-accent)',
+				'failure-accent': 'var(--failure-accent)',
+				'warning-accent': 'var(--warning-accent)',
+				'success-accent': 'var(--success-accent)',
+			},
+			backgroundImage: {
+				'linear-accent-gradient':
+					'linear-gradient(to right, var(--primary-accent), var(--secondary-accent))',
+			},
+			fontFamily: {
+				heading: ['var(--font-fira-code)'],
+				body: ['var(--font-fira-code)']
+			},
+			zIndex: {
+				'-1': '-1'
+			},
+		},
+	},
+	plugins: [
+		require('@tailwindcss/typography'),
+	],
 }
 export default config
