@@ -1,0 +1,54 @@
+@layer base {
+	:root {
+		--primary-text: #FFF;
+		--secondary-text: #EEE;
+		--light-text: #EEE;
+		--primary-bg: #b0cdd8;
+		--secondary-bg: #0f0d24;
+		--opposite-bg: #1A1A1A;
+		--primary-accent: #91b9c9;
+		--secondary-accent: #0f0d24;
+		--failure-accent: #C43F21;
+		--warning-accent: #C5A922;
+		--success-accent: #22C55E;
+
+		--header-height: 75px;
+		--header-item: 25px;
+		--preview-header-height: 40px;
+		--total-header-height: calc(var(--header-height) + var(--preview-header-height));
+
+		--icon-size: 28px;
+
+	}
+
+	.dark {
+		--primary-text: #FFF;
+		--secondary-text: #CCC;
+		--primary-bg: #161214;
+		--secondary-bg: #181617;
+		--opposite-bg: #efeeed;
+		--primary-accent: #ad7f9f;
+		--secondary-accent: #837DA1;
+		--failure-accent: #C43F21;
+		--warning-accent: #C5A922;
+		--success-accent: #22C55E;
+	}
+
+	body {
+		@apply font-body text-left text-lg text-secondary-text bg-primary-bg;
+		/* background: linear-gradient(
+				to top,
+				transparent,
+				var(--secondary-bg)
+			)
+			var(--primary-bg);*/
+	}
+	h1, h2, h3, h4, h5, h6 { @apply font-heading text-primary-text font-bold; }
+	h1 { @apply text-6xl ; }
+	h2 { @apply text-5xl; }
+	a { @apply underline underline-offset-2 motion-safe:hover:underline-offset-4 transition-[text-underline-offset] duration-100 visited:text-secondary-accent hover:text-primary-accent; }
+	p { @apply mt-2; }
+
+	.main-padding { @apply max-w-screen-2xl w-full mx-auto px-6 sm:px-12 md:px-24; }
+	.separator { @apply after:absolute after:inset-0 after:border-b-2 after:border-solid after:border-light-text; }
+}
