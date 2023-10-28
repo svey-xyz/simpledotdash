@@ -25,7 +25,7 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode,
 }) {
-	const defaultTheme = "light";
+	const defaultTheme = "dark";
 	const cookieValue = cookies().get("theme")?.value || "";
 	const isTheme = cookieValue === defaultTheme || cookieValue === "light";
 	const theme = isTheme ? cookieValue : defaultTheme;
@@ -37,7 +37,7 @@ export default async function RootLayout({
 	return (
 		<html lang="en" className={documentClasses}>
 			<Head />
-			<body className='relative min-h-screen bg-gradient-to-b from-primary-bg to-secondary-bg from-10% to-80%'>
+			<body className='relative min-h-screen'>
 				<Header />
 				<main className='mb-24 min-h-full'>
 					{children}

@@ -10,13 +10,16 @@ export default async function Home() {
 	const apps = config.apps
 	return (
 		<div className="relative flex flex-col main-padding">
+
 			{(apps &&
-			<div>
-			{}
-			</div>)}
-			{apps?.map((app, i ,arr) => {
-				return (<AppCard app={app} key={app.title} />)
-			})}
+				<div className="">
+					<h2>Apps</h2>
+					{apps?.map((app, i, arr) => {
+						return (<AppCard app={app} key={app.title} />)
+					})}
+				</div>
+			)}
+	
 		</div>
 	)
 }
