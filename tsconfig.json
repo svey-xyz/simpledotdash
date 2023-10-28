@@ -25,6 +25,7 @@
 			"@components/*": ["./app/_components/*"],
 			"@lib/*": ["./lib/*"],
 			"@dashboard/*": ["./app/(dashboard)/*"],
+			"@data/*": ["./app/_data/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

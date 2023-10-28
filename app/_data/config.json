@@ -5,7 +5,7 @@
 	},
 	"taxonomies": [
 		{
-			"prefLabel": "DevOps",
+			"title": "DevOps",
 			"description": ""
 		}
 	],
@@ -20,11 +20,5 @@
 				"DevOps"
 			]
 		}
-	],
-	"bookmarks": [
-
-	],
-	"widgets": [
-		
 	]
 }
