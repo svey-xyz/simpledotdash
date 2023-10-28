@@ -1,0 +1,30 @@
+{
+	"settings": {
+		"title": "SimpleDotDash",
+		"icon": "code"
+	},
+	"taxonomies": [
+		{
+			"prefLabel": "DevOps",
+			"description": ""
+		}
+	],
+	"apps": [
+		{
+			"title": "Proxmox",
+			"description": "",
+			"url": "192.168.0.4:8006",
+			"displayURL": "192.168.0.4",
+			"icon": "code",
+			"taxonomies": [
+				"DevOps"
+			]
+		}
+	],
+	"bookmarks": [
+
+	],
+	"widgets": [
+		
+	]
+}
