@@ -12,7 +12,7 @@ export default async function AppCard({ app }: { app: app }) {
 					<Icon />
 				</div>
 			)}
-			<h3 className='relative'>{app.title}</h3>
+			<h4 className='relative'>{app.title}</h4>
 		</a>
 	)
 }
