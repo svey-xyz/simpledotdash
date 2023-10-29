@@ -10,6 +10,9 @@ export default async function Home() {
 	const config = getData()
 	if (!config) return;
 	const apps = config.apps
+	const unCategorizedApps = apps?.map((app, i, arr) => {
+		if (app.taxonomies?.length == 0) return app
+	})
 	const taxonomies = config.taxonomies
 
 	return (
@@ -28,10 +31,10 @@ export default async function Home() {
 					</div>
 				</div>
 			)}
-			{(apps &&
+			{(unCategorizedApps && (unCategorizedApps.length == 0) &&
 				<div className="">
-					<h2>Apps</h2>
-					<AppSection apps={apps} />
+					<h2>Un-categorized Apps</h2>
+					<AppSection apps={unCategorizedApps} />
 				</div>
 			)}
 	
