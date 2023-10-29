@@ -15,8 +15,8 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next"
-      }
+        "name": "next",
+      },
     ],
     "paths": {
       "@/*": ["./*"],
@@ -26,8 +26,9 @@
 			"@lib/*": ["./lib/*"],
 			"@dashboard/*": ["./app/(dashboard)/*"],
 			"@data/*": ["./app/_data/*"],
-    }
+			"@helpers/*": ["./app/_helpers/*"],
+    },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

@@ -7,6 +7,7 @@ const config: Config = {
 	},
 	content: [
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
+		"!./node_modules", 
 	],
 	theme: {
 		screens: {

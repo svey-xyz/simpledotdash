@@ -1,10 +1,10 @@
 @layer base {
 	:root {
-		--primary-text: #FFF;
-		--secondary-text: #EEE;
-		--light-text: #EEE;
-		--primary-bg: #b0cdd8;
-		--secondary-bg: #0f0d24;
+		--primary-text: #222;
+		--secondary-text: #444;
+		--light-text: #888;
+		--primary-bg: #ebebeb;
+		--secondary-bg: #fff;
 		--opposite-bg: #1A1A1A;
 		--primary-accent: #91b9c9;
 		--secondary-accent: #0f0d24;
@@ -17,7 +17,7 @@
 		--preview-header-height: 40px;
 		--total-header-height: calc(var(--header-height) + var(--preview-header-height));
 
-		--icon-size: 28px;
+		--icon-size: 32px;
 
 	}
 
@@ -44,8 +44,8 @@
 			var(--primary-bg);*/
 	}
 	h1, h2, h3, h4, h5, h6 { @apply font-heading text-primary-text font-bold; }
-	h1 { @apply text-6xl ; }
-	h2 { @apply text-5xl; }
+	h1 { @apply text-4xl ; }
+	h2 { @apply text-3xl; }
 	a { }
 	p { @apply mt-2; }
 

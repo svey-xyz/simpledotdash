@@ -13,8 +13,18 @@
 		{
 			"title": "Proxmox",
 			"description": "",
-			"url": "192.168.0.4:8006",
+			"url": "http://192.168.0.4:8006",
 			"displayURL": "192.168.0.4",
+			"icon": "code",
+			"taxonomies": [
+				"DevOps"
+			]
+		},
+		{
+			"title": "Unraid",
+			"description": "",
+			"url": "http://192.168.0.3",
+			"displayURL": "192.168.0.3",
 			"icon": "code",
 			"taxonomies": [
 				"DevOps"
