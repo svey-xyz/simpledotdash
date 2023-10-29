@@ -15,7 +15,7 @@
 			"description": "",
 			"url": "http://192.168.0.4:8006",
 			"displayURL": "192.168.0.4",
-			"icon": "code",
+			"icon": "ServerStackIcon",
 			"taxonomies": [
 				"DevOps"
 			]
@@ -25,7 +25,15 @@
 			"description": "",
 			"url": "http://192.168.0.3",
 			"displayURL": "192.168.0.3",
-			"icon": "code",
+			"taxonomies": [
+				"DevOps"
+			]
+		},
+		{
+			"title": "Plex",
+			"description": "",
+			"url": "http://plex.svey.xyz",
+			"displayURL": "http://plex.svey.xyz",
 			"taxonomies": [
 				"DevOps"
 			]
