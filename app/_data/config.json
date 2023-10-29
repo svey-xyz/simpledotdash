@@ -7,6 +7,9 @@
 		{
 			"title": "DevOps",
 			"description": ""
+		},
+		{
+			"title": "Media"
 		}
 	],
 	"apps": [
@@ -15,7 +18,7 @@
 			"description": "",
 			"url": "http://192.168.0.4:8006",
 			"displayURL": "192.168.0.4",
-			"icon": "ServerStackIcon",
+			"icon": "CpuChipIcon",
 			"taxonomies": [
 				"DevOps"
 			]
@@ -25,8 +28,9 @@
 			"description": "",
 			"url": "http://192.168.0.3",
 			"displayURL": "192.168.0.3",
+			"icon": "CircleStackIcon",
 			"taxonomies": [
-				"DevOps"
+				"Media"
 			]
 		},
 		{
@@ -34,8 +38,9 @@
 			"description": "",
 			"url": "http://plex.svey.xyz",
 			"displayURL": "http://plex.svey.xyz",
+			"icon": "PlayCircleIcon",
 			"taxonomies": [
-				"DevOps"
+				"Media"
 			]
 		}
 	]
