@@ -1,6 +1,6 @@
 {
 	"settings": {
-		"title": "SimpleDotDash",
+		"title": "xyz",
 		"icon": "code"
 	},
 	"taxonomies": [
@@ -24,6 +24,26 @@
 			]
 		},
 		{
+			"title": "Authelia",
+			"description": "",
+			"url": "https://auth.svey.xyz",
+			"displayURL": "https://auth.svey.xyz",
+			"icon": "LockClosedIcon",
+			"taxonomies": [
+				"DevOps"
+			]
+		},
+		{
+			"title": "Vaultwarden",
+			"description": "",
+			"url": "https://vaultwarden.svey.xyz",
+			"displayURL": "https://vaultwarden.svey.xyz",
+			"icon": "ShieldCheckIcon",
+			"taxonomies": [
+				"DevOps"
+			]
+		},
+		{
 			"title": "Unraid",
 			"description": "",
 			"url": "http://192.168.0.3",
@@ -39,6 +59,46 @@
 			"url": "http://plex.svey.xyz",
 			"displayURL": "http://plex.svey.xyz",
 			"icon": "PlayCircleIcon",
+			"taxonomies": [
+				"Media"
+			]
+		},
+		{
+			"title": "Sonarr",
+			"description": "",
+			"url": "http://sonarr.svey.xyz",
+			"displayURL": "http://sonarr.svey.xyz",
+			"icon": "TvIcon",
+			"taxonomies": [
+				"Media"
+			]
+		},
+		{
+			"title": "Radarr",
+			"description": "",
+			"url": "http://radarr.svey.xyz",
+			"displayURL": "http://radarr.svey.xyz",
+			"icon": "FilmIcon",
+			"taxonomies": [
+				"Media"
+			]
+		},
+		{
+			"title": "Transmission",
+			"description": "",
+			"url": "http://transmission.svey.xyz",
+			"displayURL": "http://transmission.svey.xyz",
+			"icon": "ArrowDownTrayIcon",
+			"taxonomies": [
+				"Media"
+			]
+		},
+		{
+			"title": "Jackett",
+			"description": "",
+			"url": "http://jackett.svey.xyz",
+			"displayURL": "http://jackett.svey.xyz",
+			"icon": "MagnifyingGlassIcon",
 			"taxonomies": [
 				"Media"
 			]
