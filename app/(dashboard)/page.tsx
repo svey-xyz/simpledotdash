@@ -17,9 +17,10 @@ export default async function Home() {
 
 	return (
 		<div className="relative flex flex-col main-padding">
+			{( apps && 
+				<h2>Apps</h2>
+			)}
 			{( taxonomies && apps &&
-				<div className="">
-					<h2>Categories</h2>
 					<div className="relative flex flex-col space-y-4 my-6">
 						{taxonomies.map((taxonomy, i, arr) => {
 							const taxApps = apps.map((app, i, arr) => {
@@ -29,10 +30,9 @@ export default async function Home() {
 							return (<TaxonomySection taxonomy={taxonomy} apps={taxApps} key={taxonomy.title} />)
 						})}
 					</div>
-				</div>
 			)}
 			{(unCategorizedApps && (unCategorizedApps.length == 0) &&
-				<div className="">
+				<div>
 					<h2>Un-categorized Apps</h2>
 					<AppSection apps={unCategorizedApps} />
 				</div>

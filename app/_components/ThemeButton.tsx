@@ -15,8 +15,8 @@ export function ThemeButton({ theme }: { theme: string }) {
 			<input onClick={changeTheme}
 				aria-label="Theme Switcher" id="themeSwitcher" type="checkbox" defaultChecked={theme == "dark" ? true : false}
 				className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none"/>
-			<SunIcon className="text-opposite-bg relative w-[80%] block peer-checked:!hidden duration-100 group-hover:scale-[1.3]" />
-			<MoonIcon className="text-opposite-bg relative w-[80%] !hidden peer-checked:!block duration-100 group-hover:scale-[1.2]" />
+			<SunIcon className="text-primary-text relative w-[80%] block peer-checked:!hidden duration-100 group-hover:scale-[1.3]" />
+			<MoonIcon className="text-primary-text relative w-[80%] !hidden peer-checked:!block duration-100 group-hover:scale-[1.2]" />
 		</label >
 	)
 }

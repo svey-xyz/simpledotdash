@@ -6,9 +6,10 @@ export default async function AppCard({ app }: { app: app }) {
 	const Icon = app.icon ? await DynamicIcon({id:app.icon}) as ElementType : undefined
 	return (
 		<a href={app.url} target="_blank" aria-label="Link to external app."
-			className="group relative flex flex-row border border-primary-text rounded-md py-4 px-6 mt-4 backdrop-blur-lg">
+			className="group relative flex flex-row border border-transparent-accent rounded-lg py-4 px-6 mt-4 overflow-hidden
+				after:absolute after:inset-0 after:backdrop-blur-xl after:backdrop-saturate-150 after:bg-[rgba(17, 25, 40, 0.75)] after:-z-1">
 			{(Icon && 
-				<div className="opacity-70 w-8 mr-4 group-hover:scale-[1.2] duration-300 transition-transform group-hover:opacity-100">
+				<div className="text-primary-text opacity-70 w-8 mr-4 group-hover:scale-[1.12] duration-100 transition-transform group-hover:opacity-100">
 					<Icon />
 				</div>
 			)}

@@ -40,15 +40,9 @@ const config: Config = {
 			colors: {
 				'primary-text': 'var(--primary-text)',
 				'secondary-text': 'var(--secondary-text)',
-				'light-text': 'var(--light-text)',
+				'transparent-accent': 'var(--transparent-accent)',
 				'primary-bg': 'var(--primary-bg)',
 				'secondary-bg': 'var(--secondary-bg)',
-				'opposite-bg': 'var(--opposite-bg)',
-				'primary-accent': 'var(--primary-accent)',
-				'secondary-accent': 'var(--secondary-accent)',
-				'failure-accent': 'var(--failure-accent)',
-				'warning-accent': 'var(--warning-accent)',
-				'success-accent': 'var(--success-accent)',
 			},
 			backgroundImage: {
 				'linear-accent-gradient':
