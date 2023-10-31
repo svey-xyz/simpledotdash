@@ -2,8 +2,6 @@
 import { ThemeProvider } from 'next-themes'
 import { ReactNode, useEffect, useState } from 'react';
 
-let height: number;
-
 export default function ThemeHandler({
 	children
 }:{
@@ -15,7 +13,9 @@ export default function ThemeHandler({
 	useEffect(() => {
 		setMounted(true);
 		setSize();
-
+		window.addEventListener('resize', () => {
+			setSize();
+		})
 	}, [])
 
 	function setSize() {
