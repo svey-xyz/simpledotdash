@@ -1,27 +1,41 @@
 "use client";
 import { refThemeButton } from "@/app/_components/ThemeButton";
-import React, { ReactEventHandler, useEffect } from "react";
+import { isJson } from "@/lib/isJSON";
+import React, { ReactEventHandler, ReactNode, useEffect, useRef, useState } from "react";
 
 let height: number;
+const localStorageTag = 'darkMode'
 
-export default function Theme() {
-	const [darkMode, setDarkMode] = React.useState<boolean>()
-	const buttonLoaded = React.useRef<boolean>(false);
+export default function ThemeHandler({
+	children
+}:{
+	children:ReactNode
+}) {
+	const [darkMode, setDarkMode] = useState<boolean>()
+	const buttonLoaded = useRef<boolean>(false);
+	const themeLoaded = useRef<boolean>(false);
+	const refThemeHandler = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		refThemeHandler.current?.classList.remove('hidden')
+	}, [refThemeHandler])
 
 	useEffect(() => {
 		initTheme();
-	}, [global.document]);
+	}, [global.window]);
 
 	useEffect(() => {
 		initButton();
 	}, [refThemeButton]);
 
 	useEffect(() => {
-		switchTheme()
+		switchTheme();
 	}, [darkMode])
 
 	function initButton() {
 		if (!buttonLoaded.current) {
+			if (refThemeButton.current) refThemeButton.current.checked = getDefaultTheme();
+
 			refThemeButton.current?.addEventListener("click", function () {
 				setDarkMode(refThemeButton.current!.checked)
 			})
@@ -30,33 +44,28 @@ export default function Theme() {
 	}
 
 	function initTheme() {
-		const defaultTheme = getDefaultTheme()
-		setDarkMode(defaultTheme === 'dark')
-		switchTheme()
+		if (!themeLoaded.current) {
+			const isDefaultDark = getDefaultTheme();
+			setDarkMode(isDefaultDark);
 
-		height = global.window.innerHeight;
-		setSize();
-		global.window.addEventListener('resize', setSize);
+			height = global.window.innerHeight;
+			setSize();
+			global.window.addEventListener('resize', setSize);
+			themeLoaded.current = true;
+		}
 	}
 
-	function getDefaultTheme() {
-		if (!global.window) return;
-		const themeTest = global.window.matchMedia("(prefers-color-scheme: light)");
-		const systemTheme = themeTest.matches ? 'light' : 'dark';
+	function getDefaultTheme(): boolean {
+		const darkModePrefQuery = global.window.matchMedia("(prefers-color-scheme: dark)");
+		const localDarkModePref = localStorage.getItem(localStorageTag);
+		const isDefaultDark = (localDarkModePref && isJson(localDarkModePref)) ? JSON.parse(localDarkModePref) : darkModePrefQuery.matches;
 
-		const userPreference = localStorage.getItem('preferredTheme');
-		const defaultTheme = userPreference ? userPreference : systemTheme;
-
-		return defaultTheme;
+		return isDefaultDark;
 	}
 
 	function switchTheme() {
-		const themeString = darkMode ? 'dark' : 'light'
-		localStorage.setItem('preferredTheme', themeString);
-		localStorage.setItem('theme', themeString);
-		global.document.documentElement.classList[darkMode ? 'add' : 'remove']('dark');
-
-		// if (refThemeButton.current) refThemeButton.current.checked = theme === 'dark'
+		localStorage.setItem(localStorageTag, JSON.stringify(darkMode));
+		global.document.body.classList[darkMode ? 'add' : 'remove']('dark');
 	}
 
 	function setSize() {
@@ -69,7 +78,9 @@ export default function Theme() {
 	}
 
 	return (
-		<></>
+		<div ref={refThemeHandler} className="hidden">
+			{children}
+		</div>
 	)
 }
 
