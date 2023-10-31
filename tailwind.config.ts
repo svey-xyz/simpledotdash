@@ -43,6 +43,9 @@ const config: Config = {
 				'transparent-accent': 'var(--transparent-accent)',
 				'primary-bg': 'var(--primary-bg)',
 				'secondary-bg': 'var(--secondary-bg)',
+				'failure-accent': 'var(--failure-accent)',
+				'warning-accent': 'var(--warning-accent)',
+				'success-accent': 'var(--success-accent)',
 			},
 			fontFamily: {
 				heading: ['sans-serif'],
