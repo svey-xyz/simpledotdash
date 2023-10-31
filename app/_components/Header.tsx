@@ -9,7 +9,7 @@ export default function Header() {
 			<div className="relative h-full flex flex-col items-center justify-center pt-12">
 				<div className="relative main-padding flex flex-row items-center justify-between z-50">
 					<h1 className='w-full relative pb-4'>{title}</h1>
-					<ThemeButton theme={'dark'}/>
+					<ThemeButton />
 				</div>
 			</div>
 		</header>

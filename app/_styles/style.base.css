@@ -4,14 +4,13 @@
 		--secondary-text: #444;
 		--transparent-accent: #ffffff40;
 
-		--header-height: 75px;
-		--header-item: 25px;
-		--icon-size: 32px;
-
 		--primary-bg: #ffffff;
 		--secondary-bg: #b2b2b2;
 		--medium-bg: #d9d9d9;
 
+		--header-height: 75px;
+		--header-item: 25px;
+		--icon-size: 32px;
 	}
 
 	.dark {
@@ -24,8 +23,10 @@
 		--medium-bg: #1f1f1f;
 	}
 
+	html { @apply bg-primary-bg screen-height; }
+
 	body {
-		@apply font-body text-left text-lg text-secondary-text bg-primary-bg;
+		@apply font-body text-left text-lg text-secondary-text min-h-full;
 		--s: 400px; /* control the size */
 		
 		--_g: var(--medium-bg) 0 120deg,#0000 0;
