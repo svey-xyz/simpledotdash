@@ -23,10 +23,24 @@
 		--medium-bg: #1f1f1f;
 	}
 
-	html { @apply bg-primary-bg screen-height; }
+	html { 
+		@apply screen-height;
+		
+	}
 
 	body {
-		@apply font-body text-left text-lg text-secondary-text min-h-full;
+		@apply font-body text-left text-lg text-secondary-text min-h-full background; 
+	}
+
+
+	h1, h2, h3, h4, h5, h6 { @apply font-heading text-primary-text font-bold; }
+	h1 { @apply text-4xl ; }
+	h2 { @apply text-3xl; }
+	a { }
+	p { @apply mt-2; }
+
+	.main-padding { @apply max-w-screen-xl w-full mx-auto px-6 sm:px-12 md:px-24; }
+	.background {
 		--s: 400px; /* control the size */
 		
 		--_g: var(--medium-bg) 0 120deg,#0000 0;
@@ -48,11 +62,4 @@
 		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		*/
 	}
-	h1, h2, h3, h4, h5, h6 { @apply font-heading text-primary-text font-bold; }
-	h1 { @apply text-4xl ; }
-	h2 { @apply text-3xl; }
-	a { }
-	p { @apply mt-2; }
-
-	.main-padding { @apply max-w-screen-xl w-full mx-auto px-6 sm:px-12 md:px-24; }
 }

@@ -3,7 +3,7 @@ import '@styles/globals.css'
 
 import { Inter } from 'next/font/google'
 import Head from '@dashboard/head'
-import Theme from '@/app/_components/Theme';
+import ThemeHandler from '@/app/_components/Theme';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,8 +22,8 @@ export default async function RootLayout({
 	return (
 		<html lang="en" className={`${inter.className}`}>
 			<Head />
-			<Theme />
-			<body>
+			<ThemeHandler>
+			<body className=''>
 				<Header />
 				<div className='fixed top-0 w-full select-none pointer-events-none h-24 z-10 bg-gradient-to-b from-primary-bg to-transparent
 					after:absolute after:inset-0 after:bg-gradient-to-b after:from-primary-bg after:to-transparent'></div>
@@ -33,6 +33,8 @@ export default async function RootLayout({
 					{children}
 				</main>
 			</body>
+			</ThemeHandler>
+
 		</html>
 	)
 }
