@@ -8,6 +8,10 @@
 		--secondary-bg: #b2b2b2;
 		--medium-bg: #d9d9d9;
 
+		--failure-accent: #C43F21;
+		--warning-accent: #C5A922;
+		--success-accent: #22C55E;
+		
 		--header-height: 75px;
 		--header-item: 25px;
 		--icon-size: 32px;

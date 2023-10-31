@@ -3,7 +3,7 @@ import { getData } from "@/lib/data.fetch";
 import React from "react";
 
 export default function Header() {
-	const title = getData()?.settings.title
+	const title = getData().data?.settings.title
 	return (
 		<header className='relative top-0 left-0 right-0 max-w-screen h-fit'>
 			<div className="relative h-full flex flex-col items-center justify-center pt-12">

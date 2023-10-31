@@ -1,19 +1,18 @@
 /** Metadata defined in layout for top route page */
-// import { config } from "@lib/data.types"
 
-import AppCard from "@components/AppCard";
 import AppSection from "@components/AppSection"
 import { getData } from "@/lib/data.fetch"
 import TaxonomySection from "@components/TaxonomySection"
+import DataError from '@components/DataError'
 
 export default async function Home() {
 	const config = getData()
-	if (!config) return;
-	const apps = config.apps
+	if (!config.isValid || !config.data) return <DataError config={config}/>;
+	const apps = config.data.apps
 	const unCategorizedApps = apps?.map((app, i, arr) => {
 		if (app.taxonomies?.length == 0) return app
 	})
-	const taxonomies = config.taxonomies
+	const taxonomies = config.data.taxonomies
 
 	return (
 		<div className="relative flex flex-col main-padding pb-24">
