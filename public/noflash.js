@@ -3,10 +3,10 @@
 
 (function () {
 	// Change these if you use something different in your hook.
-	var storageKey = 'darkMode';
+	var storageKey = 'preferredTheme';
 	var classNameDark = 'dark';
 	var classNameLight = 'light';
-
+	
 	function setClassOnDocumentBody(darkMode) {
 		document.body.classList.add(darkMode ? classNameDark : classNameLight);
 		document.body.classList.remove(darkMode ? classNameLight : classNameDark);
