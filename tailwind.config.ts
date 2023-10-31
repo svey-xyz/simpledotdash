@@ -44,13 +44,9 @@ const config: Config = {
 				'primary-bg': 'var(--primary-bg)',
 				'secondary-bg': 'var(--secondary-bg)',
 			},
-			backgroundImage: {
-				'linear-accent-gradient':
-					'linear-gradient(to right, var(--primary-accent), var(--secondary-accent))',
-			},
 			fontFamily: {
-				heading: ['var(--font-fira-code)'],
-				body: ['var(--font-fira-code)']
+				heading: ['sans-serif'],
+				body: ['sans-serif']
 			},
 			zIndex: {
 				'-1': '-1'

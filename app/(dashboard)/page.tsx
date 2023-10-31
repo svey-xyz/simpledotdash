@@ -16,7 +16,7 @@ export default async function Home() {
 	const taxonomies = config.taxonomies
 
 	return (
-		<div className="relative flex flex-col main-padding">
+		<div className="relative flex flex-col main-padding pb-24">
 			{( apps && 
 				<h2>Apps</h2>
 			)}
