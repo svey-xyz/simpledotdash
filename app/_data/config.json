@@ -4,13 +4,8 @@
 		"icon": "code"
 	},
 	"taxonomies": [
-		{
-			"title": "DevOps",
-			"description": ""
-		},
-		{
-			"title": "Media"
-		}
+		"DevOps",
+		"Media"
 	],
 	"apps": [
 		{

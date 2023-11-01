@@ -23,10 +23,7 @@ export type app = {
 	taxonomies?: Array<string>,
 }
 
-export type taxonomy = {
-	title: string,
-	description?: string,
-}
+export type taxonomy = string;
 
 export type bookmark = {
 	title: string,
@@ -51,15 +48,10 @@ export const schema: JTDDataType<config> = {
 				icon: { type: "string" },
 			},
 		},
+	},
+	optionalProperties: {
 		taxonomies: {
-			elements: {
-				properties: {
-					title: { type: "string" },
-				},
-				optionalProperties: {
-					description: { type: "string" },
-				},
-			},
+			elements: { type: "string" },
 		},
 		apps: {
 			elements: {
@@ -76,6 +68,18 @@ export const schema: JTDDataType<config> = {
 					},
 				},
 			}
+		},
+		bookmarks: {
+			elements: {
+				properties: {
+					title: { type: "string" },
+					url: { type: "string" },
+				},
+				optionalProperties: {
+					description: { type: "string" },
+					displayURL: { type: "string" },
+				},
+			},
 		},
 	},
 }
