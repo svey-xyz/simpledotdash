@@ -14,7 +14,7 @@ export default function DataError({ config }: { config: configData }) {
 					const path = error.instancePath
 					const message = error.message
 					return (
-						<div key={error.instancePath} className="group relative flex flex-col border border-transparent-accent rounded-lg py-4 px-6 mt-4 overflow-hidden
+						<div key={error.schemaPath + error.keyword} className="group relative flex flex-col border border-transparent-accent rounded-lg py-4 px-6 mt-4 overflow-hidden
 							before:absolute before:inset-0 before:backdrop-blur-xl before:backdrop-saturate-150 before:bg-[rgba(17, 25, 40, 0.75)] before:-z-1">
 							<h3 className="text-failure-accent font-black">{path}</h3>
 							<p>{message}</p>

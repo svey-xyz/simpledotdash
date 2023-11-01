@@ -4,15 +4,26 @@ import AppSection from "@components/AppSection"
 import { getData } from "@/lib/data.fetch"
 import TaxonomySection from "@components/TaxonomySection"
 import DataError from '@components/DataError'
+import { app } from "@/lib/data.schema"
+import { link } from "fs"
 
 export default async function Home() {
-	const config = getData()
-	if (!config.isValid || !config.data) return <DataError config={config}/>;
+	const config = getData();
+	if (!config.isValid || !config.data)
+		return <DataError config={config}/>;
+
 	const apps = config.data.apps
-	const unCategorizedApps = apps?.map((app, i, arr) => {
-		if (app.taxonomies?.length == 0) return app
-	})
 	const taxonomies = config.data.taxonomies
+
+	let unCategorizedApps: Array<app> = []
+	apps?.forEach((app) => {
+		let unCategorized = true;
+		app.taxonomies?.forEach((taxonomy) => {
+			if (taxonomies?.includes(taxonomy)) unCategorized = false;
+		});
+		if (unCategorized) unCategorizedApps.push(app)
+	});
+
 
 	return (
 		<div className="relative flex flex-col main-padding pb-24">
@@ -23,16 +34,16 @@ export default async function Home() {
 					<div className="relative flex flex-col space-y-4 my-6">
 						{taxonomies.map((taxonomy, i, arr) => {
 							const taxApps = apps.map((app, i, arr) => {
-								if (app.taxonomies?.includes(taxonomy.title)) return app
+								if (app.taxonomies?.includes(taxonomy)) return app
 								return undefined
 							})
-							return (<TaxonomySection taxonomy={taxonomy} apps={taxApps} key={taxonomy.title} />)
+							return (<TaxonomySection taxonomy={taxonomy} apps={taxApps} key={taxonomy} />)
 						})}
 					</div>
 			)}
-			{(unCategorizedApps && (unCategorizedApps.length == 0) &&
-				<div>
-					<h2>Un-categorized Apps</h2>
+			{((unCategorizedApps && unCategorizedApps.length != 0) &&
+				<div className="relative flex flex-col space-y-4 my-6">
+					<h3>Un-categorized Apps</h3>
 					<AppSection apps={unCategorizedApps} />
 				</div>
 			)}
