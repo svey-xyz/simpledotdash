@@ -1,6 +1,6 @@
 import React, { ElementType } from "react";
 import { app, taxonomy } from "@lib/data.schema"
-import AppSection from "@components/AppSection";
+import AppSection from "@/components/AppSection";
 
 
 export default async function TaxonomySection({ taxonomy, apps }: { taxonomy: taxonomy, apps: Array<app | undefined> }) {

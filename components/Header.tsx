@@ -1,4 +1,4 @@
-import ThemeButton from "@/app/_components/ThemeButton";
+import ThemeButton from "@/components/ThemeButton";
 import { getData } from "@/lib/data.fetch";
 import React from "react";
 
