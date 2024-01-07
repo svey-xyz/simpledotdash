@@ -17,6 +17,11 @@ bun.lockb
 # production
 /build
 
+# app data
+/prisma
+/prisma/
+/prisma/*
+
 # misc
 .DS_Store
 *.pem
