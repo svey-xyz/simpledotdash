@@ -17,6 +17,10 @@ model User {
   apps App[]
 }
 
+model Settings {
+	title String @unique
+	icon String?
+}
 
 model App {
   id        Int     @id @default(autoincrement())

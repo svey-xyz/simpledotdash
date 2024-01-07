@@ -2,9 +2,10 @@ import Ajv from "ajv/dist/jtd"
 import data from "@data/config.json"
 import { AnySchema, AnyValidateFunction } from "ajv/dist/core"
 import { config, schema } from "@/lib/data.schema"
+
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
 
 async function main() {
 	const users = await prisma.user.findMany()
