@@ -24,7 +24,6 @@
 			"@public/*": ["./public/*"],
 			"@components/*": ["./components/*"],
 			"@lib/*": ["./lib/*"],
-			"@dashboard/*": ["./app/(dashboard)/*"],
 			"@data/*": ["./app/_data/*"],
     },
   },
