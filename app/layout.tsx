@@ -2,7 +2,7 @@ import Header from '@components/Header'
 import '@styles/globals.css'
 
 import { Inter } from 'next/font/google'
-import Head from '@dashboard/head'
+import Head from '@/app/head'
 import ThemeHandler from '@components/Theme';
 
 const inter = Inter({ subsets: ['latin'] })
