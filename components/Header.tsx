@@ -1,9 +1,8 @@
-import ThemeButton from "@/components/ThemeButton";
-import { getData, prisma } from "@/lib/data.fetch";
+import ThemeButton from "@components/ThemeButton";
+import { prisma } from "@lib/data.fetch";
 import React from "react";
 
 export default async function Header() {
-	const title = getData().data?.settings.title
 	const settings = await prisma.settings.findFirst()
 
 	return (

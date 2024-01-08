@@ -18,9 +18,9 @@ bun.lockb
 /build
 
 # app data
-/prisma
-/prisma/
-/prisma/*
+/prisma/migrations/
+/prisma/data/
+
 
 # misc
 .DS_Store

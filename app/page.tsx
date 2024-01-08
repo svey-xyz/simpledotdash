@@ -6,6 +6,8 @@ import TaxonomySection from "@components/TaxonomySection"
 import DataError from '@components/DataError'
 import { app } from "@/lib/data.schema"
 import { link } from "fs"
+import EditButton from "@/components/EditButton"
+import SettingsOverlay from "@/components/SettingsOverlay"
 
 export default async function Home() {
 
@@ -30,9 +32,13 @@ export default async function Home() {
 
 	return (
 		<div className="relative flex flex-col main-padding pb-24">
-			{( apps && 
-				<h2>Apps</h2>
+			{( apps &&
+				<div className="relative flex flex-row items-center gap-4">
+					<h2>Apps</h2>
+					<EditButton />
+				</div>
 			)}
+			<SettingsOverlay/>
 			{( taxonomies && apps &&
 					<div className="relative flex flex-col space-y-4 my-6">
 						{taxonomies.map((taxonomy, i, arr) => {
