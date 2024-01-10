@@ -30,7 +30,7 @@ export default function DataError({ config }: { config: configData }) {
 	className="group relative flex flex-row border border-transparent-accent rounded-lg py-4 px-6 mt-4 overflow-hidden
 				before:absolute before:inset-0 before:backdrop-blur-xl before:backdrop-saturate-150 before:bg-[rgba(17, 25, 40, 0.75)]">
 	{(Icon &&
-		<div className="text-primary-text opacity-70 w-8 mr-4 group-hover:scale-[1.12] duration-100 transition-transform group-hover:opacity-100">
+		<div className="text-fg opacity-70 w-8 mr-4 group-hover:scale-[1.12] duration-100 transition-transform group-hover:opacity-100">
 			<Icon />
 		</div>
 	)}

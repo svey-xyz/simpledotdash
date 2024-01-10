@@ -9,7 +9,7 @@ const EditButton = ({}:{}) => {
 		<button className="relative w-icon h-icon"
 			onClick={()=>{console.log("clicked");
 		}}>
-			<PencilSquareIcon className='relative text-primary-text w-icon h-icon' />
+			<PencilSquareIcon className='relative text-fg w-icon h-icon' />
 		</button>
 	);
 };

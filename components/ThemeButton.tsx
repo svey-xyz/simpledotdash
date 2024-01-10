@@ -22,8 +22,8 @@ export function ThemeButton() {
 			<input id='themeSwitcher' aria-label="Theme Switcher" type="checkbox" ref={refThemeButton}
 				onClick={ (e) => { if (mounted) setTheme(e.currentTarget.checked ? 'dark' : 'light') } }
 				className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none"/>
-			<SunIcon className="text-primary-text relative w-[80%] block peer-checked:!hidden duration-100 group-hover:scale-[1.3]" />
-			<MoonIcon className="text-primary-text relative w-[80%] !hidden peer-checked:!block duration-100 group-hover:scale-[1.2]" />
+			<SunIcon className="text-fg relative w-[80%] block peer-checked:!hidden duration-100 group-hover:scale-[1.3]" />
+			<MoonIcon className="text-fg relative w-[80%] !hidden peer-checked:!block duration-100 group-hover:scale-[1.2]" />
 		</label >
 	)
 }

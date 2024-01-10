@@ -1,3 +1,4 @@
+import User from "@/components/User";
 import ThemeButton from "@components/ThemeButton";
 import db from "@lib/db";
 import React from "react";
@@ -10,7 +11,8 @@ export default async function Header() {
 			<div className="relative h-full flex flex-col items-center justify-center pt-12">
 				<div className="relative main-padding flex flex-row items-center justify-between z-50">
 					<h1 className='w-full relative pb-4'>{settings?.title}</h1>
-					<ThemeButton />
+					{/* <ThemeButton /> */}
+					<User />
 				</div>
 			</div>
 		</header>

@@ -39,14 +39,25 @@ const config: Config = {
 				'1/3': '33%'
 			},
 			colors: {
-				'primary-text': 'var(--primary-text)',
-				'secondary-text': 'var(--secondary-text)',
-				'transparent-accent': 'var(--transparent-accent)',
-				'primary-bg': 'var(--primary-bg)',
-				'secondary-bg': 'var(--secondary-bg)',
-				'failure-accent': 'var(--failure-accent)',
-				'warning-accent': 'var(--warning-accent)',
-				'success-accent': 'var(--success-accent)',
+				bg: {
+					primary: `rgb(var(--primary-bg) / <alpha-value>)`,
+					DEFAULT: `rgb(var(--primary-bg) / <alpha-value>)`,
+					secondary: `rgb(var(--primary-bg) / <alpha-value>)`,
+				},
+				fg: {
+					primary: `rgb(var(--primary-text) / <alpha-value>)`,
+					DEFAULT: `rgb(var(--primary-text) / <alpha-value>)`,
+					secondary: `rgb(var(--secondary-text) / <alpha-value>)`,
+				},
+				accent: {
+					primary: `rgb(var(--primary-accent) / <alpha-value>)`,
+					DEFAULT: `rgb(var(--primary-accent) / <alpha-value>)`,
+					secondary: `rgb(var(--secondary-accent) / <alpha-value>)`,
+					failure: `rgb(var(--failure-accent) / <alpha-value>)`,
+					warning: `rgb(var(--warning-accent) / <alpha-value>)`,
+					success: `rgb(var(--success-accent) / <alpha-value>)`,
+				},
+
 			},
 			fontFamily: {
 				heading: ['sans-serif'],
