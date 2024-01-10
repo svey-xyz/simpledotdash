@@ -1,8 +1,8 @@
-import { prisma } from "../../../lib/data.fetch";
+import db from "@lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-	const apps = await prisma.app.findMany();
+	const apps = await db.app.findMany();
 	return NextResponse.json(apps);
 }
 
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 	try {
 		const json = await request.json();
 
-		const app = await prisma.app.create({
+		const app = await db.app.create({
 			data: json,
 		});
 

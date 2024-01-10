@@ -1,9 +1,9 @@
 import ThemeButton from "@components/ThemeButton";
-import { prisma } from "@lib/data.fetch";
+import db from "@lib/db";
 import React from "react";
 
 export default async function Header() {
-	const settings = await prisma.settings.findFirst()
+	const settings = await db.settings.findFirst()
 
 	return (
 		<header className='relative top-0 left-0 right-0 max-w-screen h-fit'>

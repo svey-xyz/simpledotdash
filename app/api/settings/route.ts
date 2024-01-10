@@ -1,16 +1,24 @@
-import { prisma } from "@../../../lib/data.fetch";
+import db from "@lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-	const settings = await prisma.settings.findFirst();
-	return NextResponse.json(settings);
+	try {
+		const settings = await db.settings.findFirst();
+
+		return new NextResponse(JSON.stringify(settings), {
+			status: 201,
+			headers: { "Content-Type": "application/json" },
+		});
+	} catch (error: any) {
+		return new NextResponse(error.message, { status: 500 });
+	}
 }
 
 export async function POST(request: Request) {
 	try {
 		const json = await request.json();
 
-		const settings = await prisma.settings.update({
+		const settings = await db.settings.update({
 			where: {id:0},
 			data: json,
 		});
@@ -37,7 +45,7 @@ export async function PATCH(
 	let json = await request.json();
 	console.log("JSON: ", json)
 
-	const updated_settings = await prisma.settings.update({
+	const updated_settings = await db.settings.update({
 		where: { id },
 		data: json,
 	});

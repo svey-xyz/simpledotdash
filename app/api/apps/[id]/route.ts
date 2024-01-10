@@ -1,4 +1,4 @@
-import { prisma } from "../../../../lib/data.fetch";
+import db from "@lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -6,7 +6,7 @@ export async function GET(
 	{ params }: { params: { id: number } }
 ) {
 	const id = params.id;
-	const app = await prisma.app.findUnique({
+	const app = await db.app.findUnique({
 		where: {
 			id,
 		},
@@ -26,7 +26,7 @@ export async function PATCH(
 	const id = params.id;
 	let json = await request.json();
 
-	const updated_app = await prisma.app.update({
+	const updated_app = await db.app.update({
 		where: { id },
 		data: json,
 	});
@@ -44,7 +44,7 @@ export async function DELETE(
 ) {
 	try {
 		const id = params.id;
-		await prisma.app.delete({
+		await db.app.delete({
 			where: { id },
 		});
 

@@ -1,4 +1,5 @@
 "use client";
+import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes'
 import { ReactNode, useEffect, useState } from 'react';
 
@@ -28,9 +29,11 @@ export default function ThemeHandler({
 	}
 
 	return (
-		<ThemeProvider attribute="class">
-			{children}
-		</ThemeProvider>
+		<SessionProvider>
+			<ThemeProvider attribute="class">
+				{children}
+			</ThemeProvider>
+		</SessionProvider>
 	)
 }
 

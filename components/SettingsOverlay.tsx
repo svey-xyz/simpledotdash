@@ -1,41 +1,26 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { fetcher, updater } from "@/lib/data.fetch.client";
 import React, { FormEvent } from 'react';
+import useSWR from 'swr'
 
-const SettingsOverlay = async ({}:{}) => {
-	const router = useRouter();
-	const update = async (settings: any) => {
-		console.log(settings)
-
-		await fetch(`/api/settings`, {
-			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				title: settings.title,
-			}),
-		});
-		router.refresh();
-	};
+const SettingsOverlay = ({}:{}) => {
+	const settingsSWR = useSWR('/api/settings', fetcher)
 
 	function onSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault()
 		const formData = new FormData(event.currentTarget)
 		const updatedTitle = formData.get('title')?.toString()
-		update({ title: updatedTitle })
-		// const setTitle = formData.get('title')?.toString()
-		// const settings = await prisma.settings.update({
-		// 	where: { id: 1},
-		// 	data: { title: setTitle }
-		// })
+		updater('/api/settings', { title: updatedTitle })
 	}
+
+	if (settingsSWR.error) return <div>failed to load</div>
+	if (settingsSWR.isLoading) return <div>loading...</div>
 	
 	return (
 		<div className=''>
 			<form onSubmit={onSubmit}>
-				<input type="text" name="title" />
+				<input type="text" name="title" defaultValue={settingsSWR.data?.title} />
 				<button type="submit">Submit</button>
 			</form>
 		</div>
