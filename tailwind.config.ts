@@ -42,7 +42,7 @@ const config: Config = {
 				bg: {
 					primary: `rgb(var(--primary-bg) / <alpha-value>)`,
 					DEFAULT: `rgb(var(--primary-bg) / <alpha-value>)`,
-					secondary: `rgb(var(--primary-bg) / <alpha-value>)`,
+					secondary: `rgb(var(--secondary-bg) / <alpha-value>)`,
 				},
 				fg: {
 					primary: `rgb(var(--primary-text) / <alpha-value>)`,

@@ -1,30 +1,35 @@
-"use client";
+"use client"; // Required to set the onClick.
 
-import { MoonIcon, SunIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
-import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from 'next-themes'
-
+import { themeRender, themes } from '@components/ThemeHandler'
+import React, { useEffect, useRef, useState } from "react";
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
 export function ThemeButton() {
+
 	const [mounted, setMounted] = useState(false)
 	const { theme, setTheme } = useTheme()
-	const refThemeButton = useRef<HTMLInputElement>(null)
+	const refThemeButton = useRef<HTMLButtonElement>(null)
 
 	useEffect(() => {
 		setMounted(true)
-		console.log('Theme: ', theme)
-		if (refThemeButton.current) refThemeButton.current.checked = theme === 'dark'
 	}, [])
 
+	const changeTheme = ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		const curThemeIndex = themes.findIndex((t) => theme == t)
+		const nextTheme = (curThemeIndex + 1) < (themes.length) ? themes[curThemeIndex + 1] : themes[0]
+		setTheme(nextTheme)
+		themeRender()
+	})
+
+	if (!mounted || !theme) return <MoonIcon className="z-10 block text-fg-primary relative h-icon w-icon duration-100 hover:scale-[1.2]" />
+
 	return (
-		<label className={mounted ? "group cursor-pointer relative flex items-center justify-center leading-xs w-icon h-icon" :
-			"group cursor-pointer relative flex items-center justify-center leading-xs w-icon h-icon blur-[2px]" } >
-			<input id='themeSwitcher' aria-label="Theme Switcher" type="checkbox" ref={refThemeButton}
-				onClick={ (e) => { if (mounted) setTheme(e.currentTarget.checked ? 'dark' : 'light') } }
-				className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none"/>
-			<SunIcon className="text-fg relative w-[80%] block peer-checked:!hidden duration-100 group-hover:scale-[1.3]" />
-			<MoonIcon className="text-fg relative w-[80%] !hidden peer-checked:!block duration-100 group-hover:scale-[1.2]" />
-		</label >
+		<button id='themeSwitcher' aria-label="Theme Switcher" ref={refThemeButton}
+			onClick={(e) => { if (mounted) changeTheme(e) }} >
+			<SunIcon className="hidden dark:block z-10 text-fg-primary relative h-icon w-icon duration-100 hover:scale-[1.1]" />
+			<MoonIcon className="block dark:hidden z-10 text-fg-primary relative h-icon w-icon duration-100 hover:scale-[1.1]" />
+		</button>
 	)
 }
 

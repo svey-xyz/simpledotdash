@@ -37,10 +37,8 @@ export default async function Home() {
 				{( apps &&
 					<div className="relative flex flex-row items-center gap-4">
 						<h2>Apps</h2>
-						<EditButton />
 					</div>
 				)}
-				<SettingsOverlay/>
 				{( taxonomies && apps &&
 						<div className="relative flex flex-col space-y-4 my-6">
 							{taxonomies.map((taxonomy, i, arr) => {
@@ -58,10 +56,6 @@ export default async function Home() {
 						<AppSection apps={unCategorizedApps} />
 					</div>
 				)}
-		
-			</div>
-			<div className="right">
-				<Signin/>
 			</div>
 		</div>
 	)

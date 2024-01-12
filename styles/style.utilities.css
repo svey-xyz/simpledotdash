@@ -25,4 +25,12 @@
 		height: 100vh;
 		height: calc(var(--vh, 1vh) * 100);
 	}
+
+	.reveal-section {
+		@apply motion-safe:translate-y-[-5vh] motion-safe:invisible motion-safe:transition-all motion-safe:duration-1000 motion-safe:ease-out motion-safe:opacity-0 will-change-auto;
+	}
+	.reveal-section.is-visible {
+		@apply motion-safe:transform-none motion-safe:visible motion-safe:opacity-100;
+	}
+
 }
