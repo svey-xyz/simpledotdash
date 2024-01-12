@@ -20,6 +20,8 @@ bun.lockb
 # app data
 /prisma/migrations/
 /prisma/data/
+/server/prisma/data/
+/server/data/
 
 
 # misc

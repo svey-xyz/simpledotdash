@@ -1,0 +1,15 @@
+type User {
+	id: Int!
+	name: String
+	email: String!
+	emailVerified: DateTime
+	image: String
+	createdAt: DateTime
+	updatedAt: DateTime
+	sessions: Session[]
+	apps: App[]
+}
+
+type Query {
+	allUsers: [User!]!
+}
