@@ -7,7 +7,6 @@ import React, { FormEvent } from "react";
 export default async function Header() {
 	const settings = await db.settings.findFirst()
 
-
 	return (
 		<header className='relative top-0 left-0 right-0 max-w-screen h-fit'>
 			<div className="relative h-full flex flex-col items-center justify-center pt-12">
