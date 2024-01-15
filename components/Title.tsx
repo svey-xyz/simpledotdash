@@ -1,48 +1,79 @@
 'use client'
 
+import prisma from '@/lib/db';
 import { getSettings, updateSettings } from '@/lib/db.actions';
 import { Settings } from '@prisma/client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+
 
 const Title = ({initialTitle}:{initialTitle?:string}) => {
 	const [settingsData, setSettingsData] = useState<Settings>(null)
-	const [isLoading, setLoading] = useState<boolean>(true)
+	const [mounted, setMounted] = useState<boolean>(true)
+
+	const [editMode, setEditMode] = useState(false)
+	const inputRef = useRef<HTMLInputElement>(null);
+	const editBtnRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
 		getSettings()
 			.then((data) => {
 				setSettingsData(data)
-				setLoading(false)
+				setMounted(false)
 			})
 	}, [])
 
-	if (isLoading) return <p>Loading...</p>
+
+	if (mounted) return <p>Loading...</p>
 	if (!settingsData) return <p>No profile data</p>
-	
-	// const title = settings.title
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		// setTitle(event.target.value);
-	};
 
-	const handleBlur = () => {
-		// setIsEditing(false);
-		// updater('/api/settings', { title: title })
+	const closeEditMode = () => {
+		setEditMode(false)
+		editBtnRef?.current?.focus();
+	}
 
-		// Save the changes or perform any required actions here
-	};
+	const openEditMode = () => {
+		setEditMode(true)
+	}
 
-	const handleDoubleClick = () => {
-		// setIsEditing(true)
-		updateSettings({})
+	const onEditHandler = async () => {
+		const currentValue = inputRef?.current?.value;
+
+		const onSavePromise = await updateSettings({title:currentValue});
+		setSettingsData(onSavePromise)
+		closeEditMode();
+
+		return onSavePromise;
 	}
 
 	return (
-		<div className='h-icon flex flex-col justify-center items-center'>
-			{ false ? 
-				<input type='text' name='title' value={`title`} autoFocus={true}
-					 required/> 
-				: <h1 onDoubleClick={handleDoubleClick}>{`title`}</h1>
-			}	{settingsData.title}
+		<div className="textfield--wrapper">
+			<div className="textfield--header">
+				<label>{settingsData.title}</label>
+				<div className="textfield--header-actions">
+					{editMode && (
+						<button
+							onClick={closeEditMode}
+							aria-label="Cancel"
+							title="Cancel"
+							className="textfield--header-action"
+						>
+							{/* <CloseIcon aria-hidden="true" /> */}
+						</button>
+					)}
+					<button
+						ref={editBtnRef}
+						onClick={editMode ? onEditHandler : openEditMode}
+						aria-label={editMode ? 'Save' : 'Edit'}
+						title={editMode ? 'Save' : 'Edit'}
+						className="textfield--header-action"
+					>
+						{/* {editMode ? <SaveIcon aria-hidden="true" /> : <EditIcon aria-hidden="true" />} */}
+							{editMode ? 'Save changes' : 'Edit'}
+					</button>
+				</div>
+			</div>
+			<input readOnly={!editMode} ref={inputRef} className="textfield--input" />
 		</div>
 		
 		
