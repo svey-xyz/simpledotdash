@@ -5,18 +5,9 @@ import { getData } from "@/lib/data.fetch"
 import TaxonomySection from "@components/TaxonomySection"
 import DataError from '@components/DataError'
 import { app } from "@/lib/data.schema"
-import EditButton from "@/components/EditButton"
-import SettingsOverlay from "@/components/SettingsOverlay"
-import Signin from "@/components/Signin"
-import { useApolloClient } from "@apollo/client"
-import { useQuery, gql } from '@apollo/client';
 
 export default async function Home() {
 	
-	// const router = useRouter();
-	// const isActive: (pathname: string) => boolean = (pathname) =>
-	// 	router.pathname === pathname;
-
 	const config = getData();
 	if (!config.isValid || !config.data)
 		return <DataError config={config}/>;

@@ -1,22 +1,8 @@
-import prisma from "@/lib/db";
-import { User } from "@prisma/client";
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next"
 import type { NextAuthOptions } from "next-auth"
 import { getServerSession } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
 import DiscordProvider from "next-auth/providers/discord";
-
-async function getUser(email: string): Promise<User | null> {
-	try {
-		const user = await prisma.user.findUnique({
-			where: { email:email }
-		});
-		return user;
-	} catch (error) {
-		console.error('Failed to fetch user:', error);
-		throw new Error('Failed to fetch user.');
-	}
-}
 
 // You'll need to import and pass this
 // to `NextAuth` in `app/api/auth/[...nextauth]/route.ts`

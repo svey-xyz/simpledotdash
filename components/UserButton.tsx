@@ -1,9 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
-import Signin from '@components/Signin';
-import { themes, themeRender } from '@/components/ThemeHandler';
-import { useTheme } from 'next-themes';
 import MenuModal from '@/components/MenuModal';
 
 const UserButton = ({}:{}) => {
