@@ -1,6 +1,6 @@
 import React from "react";
 import { app } from "../lib/data.schema";
-import AppCard from "@/components/AppCard";
+import AppCard from "@components/AppCard";
 
 export default function AppSection({apps}:{apps:Array<app | undefined>}) {
 	return (<div 

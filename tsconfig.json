@@ -27,9 +27,7 @@
 			"lib/@types"
 		],
     "paths": {
-      "@/*": [
-        "./*"
-      ],
+
       "@styles/*": [
         "./styles/*"
       ],

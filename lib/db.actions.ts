@@ -6,7 +6,6 @@ import { Settings } from '@prisma/client';
 
 export const updateSettings = async (data:{}) => {
 	let settings: Settings
-	console.log('wowza')
 	try {
 		settings=await prisma.settings.update({ where: { id: 0 }, data });
 

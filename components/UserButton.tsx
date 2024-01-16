@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
-import MenuModal from '@/components/MenuModal';
+import MenuModal from '@components/MenuModal';
 
 const UserButton = ({}:{}) => {
 	const [mounted, setMounted] = useState(false)

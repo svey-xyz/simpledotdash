@@ -3,7 +3,7 @@
 import Ajv from "ajv/dist/jtd"
 import data from "@data/config.json"
 import { AnySchema, AnyValidateFunction } from "ajv/dist/core"
-import { config, schema } from "@/lib/data.schema"
+import { config, schema } from "@lib/data.schema"
 
 const ajv = new Ajv({ allErrors: true }) // options can be passed, e.g. {allErrors: true}
 const validator = ajv.compile(schema as AnySchema)

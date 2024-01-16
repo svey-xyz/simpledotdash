@@ -1,31 +1,21 @@
 'use client'
 
-import prisma from '@/lib/db';
-import { getSettings, updateSettings } from '@/lib/db.actions';
 import { Settings } from '@prisma/client';
 import React, { useEffect, useRef, useState } from 'react';
 
-
-
-const Title = ({initialTitle}:{initialTitle?:string}) => {
-	const [settingsData, setSettingsData] = useState<Settings>(null)
-	const [mounted, setMounted] = useState<boolean>(true)
-
-	const [editMode, setEditMode] = useState(false)
+const EditableText = ({ initialText, saveData }: { initialText: string, saveData?: (data:{}) => Promise<any> }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const editBtnRef = useRef<HTMLButtonElement>(null);
+	const [editMode, setEditMode] = useState<boolean>(false)
+	const [mounted, setMounted] = useState<boolean>(true)
+	const [textData, setTextData] = useState<string>(initialText)
 
 	useEffect(() => {
-		getSettings()
-			.then((data) => {
-				setSettingsData(data)
-				setMounted(false)
-			})
-	}, [])
+		if (!mounted) setMounted(true)
+		if (editMode) inputRef?.current?.focus()
+	}, [editMode])
 
-
-	if (mounted) return <p>Loading...</p>
-	if (!settingsData) return <p>No profile data</p>
+	if (!mounted) return <p>Loading...</p>
 
 	const closeEditMode = () => {
 		setEditMode(false)
@@ -39,17 +29,18 @@ const Title = ({initialTitle}:{initialTitle?:string}) => {
 	const onEditHandler = async () => {
 		const currentValue = inputRef?.current?.value;
 
-		const onSavePromise = await updateSettings({title:currentValue});
-		setSettingsData(onSavePromise)
+		const settingsData = await saveData({ title: currentValue }) as Settings;
+		setTextData(settingsData.title)
 		closeEditMode();
 
-		return onSavePromise;
+		return settingsData.title;
 	}
 
+	
 	return (
 		<div className="textfield--wrapper">
 			<div className="textfield--header">
-				<label>{settingsData.title}</label>
+				{/* <label>{settingsData.title}</label> */}
 				<div className="textfield--header-actions">
 					{editMode && (
 						<button
@@ -69,15 +60,13 @@ const Title = ({initialTitle}:{initialTitle?:string}) => {
 						className="textfield--header-action"
 					>
 						{/* {editMode ? <SaveIcon aria-hidden="true" /> : <EditIcon aria-hidden="true" />} */}
-							{editMode ? 'Save changes' : 'Edit'}
+						{editMode ? 'Save changes' : 'Edit'}
 					</button>
 				</div>
 			</div>
-			<input readOnly={!editMode} ref={inputRef} className="textfield--input" />
+			<input readOnly={!editMode} ref={inputRef} className="rounded-sm read-only:bg-transparent read-only:border-transparent" defaultValue={textData} />
 		</div>
-		
-		
 	);
 };
 
-export default Title;
+export default EditableText;

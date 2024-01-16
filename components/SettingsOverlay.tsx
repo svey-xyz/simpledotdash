@@ -1,6 +1,6 @@
 "use client";
 
-import { fetcher, updater } from "@/lib/data.fetch.client";
+import { fetcher, updater } from "@lib/data.fetch.client";
 import React, { FormEvent } from 'react';
 import useSWR from 'swr'
 

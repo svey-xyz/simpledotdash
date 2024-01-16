@@ -1,10 +1,10 @@
 
 /** Metadata defined in layout for top route page */
 import AppSection from "@components/AppSection"
-import { getData } from "@/lib/data.fetch"
+import { getData } from "@lib/data.fetch"
 import TaxonomySection from "@components/TaxonomySection"
 import DataError from '@components/DataError'
-import { app } from "@/lib/data.schema"
+import { app } from "@lib/data.schema"
 
 export default async function Home() {
 	
