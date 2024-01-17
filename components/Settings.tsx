@@ -27,6 +27,7 @@ export const Button = ({}:{}) => {
 const Modal = ({visibility}:{visibility:boolean}) => {
 	const session = useSession()
 	const user = session.data?.user
+	
 	return (
 		<section className="absolute right-0 w-96 z-50"
 			style={{ visibility: visibility ? 'visible' : 'hidden' }}>

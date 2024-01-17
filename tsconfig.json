@@ -47,6 +47,7 @@
     "strict": false
   },
   "include": [
+		"/lib/@types/nextauth.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
