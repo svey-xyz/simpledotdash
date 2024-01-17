@@ -1,5 +1,5 @@
 import EditableText from "@components/EditableText";
-import UserButton from "@components/UserButton";
+import { Button } from "@components/Settings";
 import { getSettings, updateSettings } from "@lib/db.actions";
 import React from "react";
 
@@ -12,7 +12,7 @@ export default async function Header() {
 				<div className="relative main-padding flex flex-row items-center justify-between z-50">
 					<EditableText initialText={settings.title} saveData={updateSettings}/>
 					{/* <ThemeButton /> */}
-					<UserButton />
+					<Button />
 				</div>
 			</div>
 		</header>
