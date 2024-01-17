@@ -47,7 +47,6 @@
     "strict": false
   },
   "include": [
-		"server/graphql/server.mjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

@@ -1,4 +1,4 @@
-import React, { ElementType } from "react";
+import React from "react";
 import { app, taxonomy } from "@lib/data.schema"
 import AppSection from "@components/AppSection";
 
