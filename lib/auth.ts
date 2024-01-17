@@ -4,7 +4,10 @@ import { getServerSession } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
 import DiscordProvider from "next-auth/providers/discord";
 import prisma from "@lib/db";
-import { User, App } from "@prisma/client"
+import { User, App, Prisma, PrismaClient } from "@prisma/client"
+// import { DefaultArgs } from "@prisma/client/runtime/library";
+import { Adapter, AdapterAccount } from "next-auth/adapters";
+import { _ } from "ajv";
 // import { User } from "@prisma/client";
 
 // You'll need to import and pass this
@@ -22,79 +25,80 @@ export const config = {
 			clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
 		}),
 	],
-	events: {
-		signIn: async({
-			user,
-			account,
-			profile,
-			isNewUser
-		}: {
-			user: authUser;
-			account: Account;
-			profile?: Profile;
-			isNewUser?: boolean;
-		}) => {
-			const userData = {
-				email: user.email,
-				name: user.name,
-				image: user.image,
-			}
+	// events: {
+	// 	signIn: async({
+	// 		user,
+	// 		account,
+	// 		profile,
+	// 		isNewUser
+	// 	}: {
+	// 		user: authUser;
+	// 		account: Account;
+	// 		profile?: Profile;
+	// 		isNewUser?: boolean;
+	// 	}) => {
+	// 		const userData = {
+	// 			email: user.email,
+	// 			name: user.name,
+	// 			image: user.image,
+	// 		}
 
-			const existingUser = await prisma.user.findUnique({
-				where: {
-					email: userData.email
-				},
-				include: {
-					sessions: true,
-					accounts: true
-				}
-			})
+	// 		const existingUser = await prisma.user.findUnique({
+	// 			where: {
+	// 				email: userData.email
+	// 			},
+	// 			include: {
+	// 				sessions: true,
+	// 				accounts: true
+	// 			}
+	// 		})
 
-			if (existingUser) {
-				// existingUser.accounts
-				let newAccount: boolean = true
-				if (existingUser.accounts.length == 0) newAccount = false
-				if (newAccount) existingUser.accounts.forEach((userAccount) => {
-					if ((userAccount.provider == account.provider)
-						&& (userAccount.providerAccountId == account.providerAccountId)) {
-						newAccount = false
-					}
-				})
+	// 		if (existingUser) {
+	// 			// existingUser.accounts
+	// 			let newAccount: boolean = true
+	// 			if (existingUser.accounts.length == 0) newAccount = false
+	// 			if (newAccount) existingUser.accounts.forEach((userAccount) => {
+	// 				if ((userAccount.provider == account.provider)
+	// 					&& (userAccount.providerAccountId == account.providerAccountId)) {
+	// 					newAccount = false
+	// 				}
+	// 			})
 
-				if (!newAccount) {
-					const updatedUser = await prisma.user.update({
-						where: {
-							email: existingUser.email
-						},
-						data: {
-							accounts: {
-								create: {
-									...account
-								}
-							}
-						}
-					})
-				}
-				console.log('user found')
+	// 			if (!newAccount) {
+	// 				const updatedUser = await prisma.user.update({
+	// 					where: {
+	// 						email: existingUser.email
+	// 					},
+	// 					data: {
+	// 						accounts: {
+	// 							create: {
+	// 								...account
+	// 							}
+	// 						}
+	// 					}
+	// 				})
+	// 			}
+	// 			console.log('user found')
 
-			}
+	// 		}
 
-			if (!existingUser) {
-				const newUser = await prisma.user.create({
-					data: {
-						...userData,
-						accounts: {
-							create: {
-								...account
-							}
-						}
-					}
-				})
-				console.log('account created: ', newUser)
+	// 		if (!existingUser) {
+	// 			const newUser = await prisma.user.create({
+	// 				data: {
+	// 					...userData,
+	// 					accounts: {
+	// 						create: {
+	// 							...account
+	// 						}
+	// 					}
+	// 				}
+	// 			})
+	// 			console.log('account created: ', newUser)
 
-			} 
-		},
-	},
+	// 		} 
+	// 	},
+	// },
+	adapter: PrismaAdapter(prisma),
 	secret: process.env.NEXTAUTH_SECRET as string,
 } satisfies NextAuthOptions
 
@@ -102,3 +106,73 @@ export const config = {
 export function auth(...args: [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]] | [NextApiRequest, NextApiResponse] | []) {
 	return getServerSession(...args, config)
 }
+
+function PrismaAdapter(p: PrismaClient): Adapter {
+	return {
+		createUser: (data) => p.user.create({ data }),
+		getUser: (id) => p.user.findUnique({ where: { id } }),
+		getUserByEmail: (email) => p.user.findUnique({ where: { email } }),
+		async getUserByAccount(provider) {
+			const account = await p.account.findUnique({
+				where: { provider_providerAccountId: {
+					provider: provider.provider,
+					providerAccountId: provider.providerAccountId
+				}},
+				select: { user: true },
+			})
+			return account?.user ?? null
+		},
+		updateUser: ({ id, ...data }) => p.user.update({ where: { id }, data }),
+		deleteUser: (id) => p.user.delete({ where: { id } }),
+		linkAccount: (account) => {
+			return p.account.create({ data: account }) as unknown as AdapterAccount
+		},
+		unlinkAccount: (provider) =>
+			p.account.delete({
+				where: {
+					provider_providerAccountId: {
+						provider: provider.provider,
+						providerAccountId: provider.providerAccountId
+					}
+				},
+			}) as unknown as AdapterAccount,
+		async getSessionAndUser(sessionToken) {
+			const userAndSession = await p.session.findUnique({
+				where: { sessionToken },
+				include: { user: true },
+			})
+			if (!userAndSession) return null
+			const { user, ...session } = userAndSession
+			return { user, session }
+		},
+		createSession: (session) => {
+			return p.session.create({ data: session })
+		},
+		updateSession: (data) =>
+			p.session.update({ where: { sessionToken: data.sessionToken }, data }),
+		deleteSession: (sessionToken) =>
+			p.session.delete({ where: { sessionToken } }),
+		async createVerificationToken(data) {
+			const verificationToken = await p.verificationToken.create({ data })
+			if (verificationToken.identifier) delete verificationToken.identifier
+			return verificationToken
+		},
+		async useVerificationToken(identifier_token) {
+			try {
+				const verificationToken = await p.verificationToken.delete({
+					where: { identifier_token },
+				})
+
+				if (verificationToken.identifier) delete verificationToken.identifier
+				return verificationToken
+			} catch (error) {
+				// If token already used/deleted, just return null
+				// https://www.prisma.io/docs/reference/api-reference/error-reference#p2025
+				if ((error as Prisma.PrismaClientKnownRequestError).code === "P2025")
+					return null
+				throw error
+			}
+		},
+	}
+}
+
