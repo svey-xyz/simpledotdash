@@ -1,8 +1,5 @@
-// 'use client'
+import React, { useMemo, useState, ReactNode } from "react";
 
-import React, { ReactNode, useMemo, useState } from "react";
-import { app } from "../lib/data.schema";
-// import AppCard from "@components/AppCard";
 import {
 	DndContext,
 	KeyboardSensor,
@@ -16,25 +13,28 @@ import {
 	arrayMove,
 	sortableKeyboardCoordinates
 } from "@dnd-kit/sortable";
-import AppCard from "@components/AppCard";
+
+import { Tile } from "./Tile";
 
 interface BaseItem {
 	id: UniqueIdentifier;
 }
 
 interface Props<T extends BaseItem> {
-	apps: T[];
+	tiles: T[];
 	onChange(items: T[]): void;
+	renderItem(item: T): ReactNode;
 }
 
-export default function AppSection<T extends app>({
-	apps,
+export const Section = <T extends BaseItem>({
+	tiles,
 	onChange,
-}:Props<T>) {
+	renderItem,
+}: Props<T>) => {
 	const [active, setActive] = useState<Active | null>(null);
 	const activeItem = useMemo(
-		() => apps.find((app) => app.id === active?.id),
-		[active, apps]
+		() => tiles.find((tile) => tile.id === active?.id),
+		[active, tiles]
 	);
 
 	const sensors = useSensors(
@@ -52,10 +52,10 @@ export default function AppSection<T extends app>({
 			}}
 			onDragEnd={({ active, over }) => {
 				if (over && active.id !== over?.id) {
-					const activeIndex = apps.findIndex(({ id }) => id === active.id);
-					const overIndex = apps.findIndex(({ id }) => id === over.id);
+					const activeIndex = tiles.findIndex(({ id }) => id === active.id);
+					const overIndex = tiles.findIndex(({ id }) => id === over.id);
 
-					onChange(arrayMove(apps, activeIndex, overIndex));
+					onChange(arrayMove(tiles, activeIndex, overIndex));
 				}
 				setActive(null);
 			}}
@@ -63,23 +63,15 @@ export default function AppSection<T extends app>({
 				setActive(null);
 			}}
 		>
-			<SortableContext items={apps}>
+			<SortableContext items={tiles}>
 				<ul className="SortableList" role="application">
-					{apps.map((app) => (
-						// <React.Fragment key={app.id}>
-						// 	{renderApp(app)}
-							<AppCard app={app} key={app.id} />
-						// </React.Fragment>
+					{tiles.map((tile) => (
+						<React.Fragment key={tile.id}>{renderItem(tile)}</React.Fragment>
 					))}
 				</ul>
 			</SortableContext>
-			{/* <div className="relative" ref={setNodeRef} style={style}>
-				{apps.map((app, i, arr) => {
-					return (app && <AppCard app={app} key={app.title} />)
-				})}
-			</div> */}
 		</DndContext>
 	)
 }
 
-AppSection.App = AppCard;
+Section.Tile = Tile;

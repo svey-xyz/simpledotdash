@@ -12,13 +12,13 @@ const EditableText = ({ initialText, saveData }: { initialText: string, saveData
 	const editMode = user?.editing
 
 	useEffect(() => {
-		// save()
+		save()
 	}, [editMode])
 
-	// const save = async () => {
-	// 	const currentValue = inputRef?.current?.value;
-	// 	return await saveData({ title: currentValue }) as Settings;
-	// }
+	const save = async () => {
+		const currentValue = inputRef?.current?.value;
+		return await saveData({ title: currentValue }) as Settings;
+	}
 
 	
 	return (
