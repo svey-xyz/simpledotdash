@@ -21,8 +21,32 @@ export const config = {
 	],
 	adapter: PrismaAdapter(prisma),
 	callbacks: {
-		async session({ session, token, user }) {
+		async jwt({ token, user, trigger, session }) {
+			/* Step 1: update the token based on the user object */
+			if (trigger === "update" && session?.editing) {
+				// Note, that `session` can be any arbitrary object, remember to validate it!
+				token.editing = session.editing
+			}
+			if (user) {
+				token.editing = user.editing;
+			}
+			return token;
+		},
+		async session({ session, token, user, trigger, newSession }) {
+			console.log("New Session: ", newSession)
 			// Send properties to the client, like an access_token and user id from a provider.
+			if (token && session.user) {
+				session.user.editing = token.editing;
+			}
+
+			// Note, that `rest.session` can be any arbitrary object, remember to validate it!
+			if (trigger === "update" && newSession?.editing) {
+				// You can update the session in the database if it's not already updated.
+				// await adapter.updateUser(session.user.id, { name: newSession.name })
+
+				// Make sure the updated value is reflected on the client
+				session.user.editing = newSession.editing
+			}
 
 			return session
 		},

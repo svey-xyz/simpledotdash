@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { ChevronUpIcon } from '@heroicons/react/24/solid';
+import { DndContext } from '@dnd-kit/core';
 
 export const themes = ['light', 'dark'] as const
 
@@ -14,7 +15,7 @@ export default function ThemeHandler({
 	children: ReactNode
 }) {
 	const [mounted, setMounted] = useState(false)
-	const themeContainer = useRef<HTMLDivElement>(null)
+
 	const topChevron = useRef<HTMLDivElement>(null)
 
 	const pathname = usePathname();
@@ -49,6 +50,8 @@ export default function ThemeHandler({
 		<SessionProvider>
 			<ThemeProvider attribute="class" enableSystem={false} defaultTheme="dark"
 				themes={themes.map((theme) => theme)}>
+
+
 				<div ref={topChevron} className='reveal-section fixed bottom-8 w-full z-50'>
 					<div className='relative main-padding flex flex-col justify-end items-end'>
 						<ChevronUpIcon className="absolute w-icon h-icon cursor-pointer transition-transform duration-100 hover:scale-[1.1]"
@@ -56,6 +59,8 @@ export default function ThemeHandler({
 					</div>
 				</div>
 				{children}
+
+
 			</ThemeProvider>
 		</SessionProvider>
 	)

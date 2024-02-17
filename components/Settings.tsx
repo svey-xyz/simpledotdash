@@ -1,17 +1,16 @@
 'use client';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { Cog6ToothIcon } from '@heroicons/react/24/solid';
+import { Cog6ToothIcon, WrenchIcon } from '@heroicons/react/24/solid';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import ThemeButton from '@components/ThemeButton';
 
 export const Button = ({}:{}) => {
 	const [mounted, setMounted] = useState(false)
 	const [menuVisibility, setMenuVisibility] = useState<boolean>(false)
 	
-
 	useEffect(() => {
 		setMounted(true)
 	}, [])
-
 
 	return (
 		<div className='relative leading-none max-h-fit'>
@@ -33,6 +32,7 @@ const Modal = ({visibility}:{visibility:boolean}) => {
 			style={{ visibility: visibility ? 'visible' : 'hidden' }}>
 			<div className='relative w-full min-w-full flex flex-col justify-end items-end'>
 				<div className='w-full min-w-full bg-fg/20 py-8 px-4'>
+					<ThemeButton />
 					{(session.status == "unauthenticated") &&
 						<div className='flex flex-col gap-4'>
 							<AuthButton method={async () => await signIn("github")}>
@@ -43,6 +43,7 @@ const Modal = ({visibility}:{visibility:boolean}) => {
 							</AuthButton>
 						</div>
 					}
+					<EditButton/>
 					{(session.status == "authenticated") &&
 						<div>
 							<p>Logged-in as: {user?.name}</p>
@@ -65,3 +66,19 @@ const AuthButton = ({ method, children }: { method: React.MouseEventHandler<HTML
 		</button>
 	)
 }
+
+export const EditButton = ({}:{}) => {
+	// const user = useSession().data?.user
+	const { data: session, status, update } = useSession()
+	const editing = session?.user?.editing
+	const handleEnterEdit = async() => {
+		update({ editing: !editing })
+		console.log('Editing')
+	}
+
+	return (
+		<button aria-label="Enter edit mode" onClick={handleEnterEdit}>
+			<WrenchIcon className="text-fg relative group-hover:scale-[1.1] h-icon w-icon"/>
+		</button>
+	);
+};

@@ -1,6 +1,7 @@
 {
 	"apps": [
 		{
+			"id": "Proxmox",
 			"title": "Proxmox",
 			"description": "",
 			"url": "http://192.168.0.4:8006",
@@ -11,6 +12,7 @@
 			]
 		},
 		{
+			"id": "Authelia",
 			"title": "Authelia",
 			"description": "",
 			"url": "https://auth.svey.xyz",
@@ -21,6 +23,7 @@
 			]
 		},
 		{
+			"id": "Vaultwarden",
 			"title": "Vaultwarden",
 			"description": "",
 			"url": "https://vaultwarden.svey.xyz",
@@ -31,6 +34,7 @@
 			]
 		},
 		{
+			"id": "Unraid",
 			"title": "Unraid",
 			"description": "",
 			"url": "http://192.168.0.3",
@@ -41,6 +45,7 @@
 			]
 		},
 		{
+			"id": "Plex",
 			"title": "Plex",
 			"description": "",
 			"url": "http://plex.svey.xyz",
@@ -51,6 +56,7 @@
 			]
 		},
 		{
+			"id": "Sonarr",
 			"title": "Sonarr",
 			"description": "",
 			"url": "http://sonarr.svey.xyz",
@@ -61,6 +67,7 @@
 			]
 		},
 		{
+			"id": "Radarr",
 			"title": "Radarr",
 			"description": "",
 			"url": "http://radarr.svey.xyz",
@@ -71,6 +78,7 @@
 			]
 		},
 		{
+			"id": "Transmission",
 			"title": "Transmission",
 			"description": "",
 			"url": "http://transmission.svey.xyz",
@@ -81,6 +89,7 @@
 			]
 		},
 		{
+			"id": "Jackett",
 			"title": "Jackett",
 			"description": "",
 			"url": "http://jackett.svey.xyz",

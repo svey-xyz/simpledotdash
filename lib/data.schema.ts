@@ -1,3 +1,4 @@
+import { UniqueIdentifier } from "@dnd-kit/core"
 import { JTDDataType } from "ajv/dist/core"
 
 export type config = {
@@ -15,6 +16,7 @@ export type settings = {
 }
 
 export type app = {
+	id: UniqueIdentifier,
 	title: string,
 	url: string,
 	description?: string,
@@ -56,6 +58,7 @@ export const schema: JTDDataType<config> = {
 		apps: {
 			elements: {
 				properties: {
+					id: { type: "string" },
 					title: { type: "string" },
 					url: { type: "string" },
 				},
