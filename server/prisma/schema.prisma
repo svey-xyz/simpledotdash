@@ -50,7 +50,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
-  apps App[]
+  apps 					App[]
 
 	@@map(name: "users")
 }

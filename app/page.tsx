@@ -1,20 +1,22 @@
 
 'use client'
 
-import { getData } from "@lib/data.fetch"
-import DataError from '@components/DataError'
 import { useState } from "react"
 import { AppCard } from "@components/AppCard"
 import { Section } from "@components/Tiles"
 import { Edit } from "@components/Buttons"
+import { useSession } from "next-auth/react"
+import { AppSettings } from "@components/Modals"
 
 export default function Home() {
-	
-	const config = getData();
-	if (!config.isValid || !config.data)
-		return <DataError config={config}/>;
 
-	const [apps, setApps] = useState(config.data.apps);
+	const session = useSession()
+
+	const user = session.data?.user
+	const [apps, setApps] = useState(user?.apps);
+
+	if (session.status == 'unauthenticated') return <></>
+	if (session.status !== 'authenticated') return <></>
 
 	return (
 		<div className="relative flex flex-col main-padding pb-24">
@@ -29,6 +31,7 @@ export default function Home() {
 				)} />
 			)}
 			<Edit />
+			<AppSettings />
 		</div>
 	)
 }
