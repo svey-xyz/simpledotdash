@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { ChevronUpIcon } from '@heroicons/react/24/solid';
-import { DndContext } from '@dnd-kit/core';
 
 export const themes = ['light', 'dark'] as const
 

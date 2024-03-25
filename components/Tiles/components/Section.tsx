@@ -15,6 +15,12 @@ import {
 } from "@dnd-kit/sortable";
 
 import { Tile } from "./Tile";
+import { Grid } from "./Grid"
+
+enum styles {
+	list,
+	grid,
+}
 
 interface BaseItem {
 	id: UniqueIdentifier;
@@ -22,12 +28,14 @@ interface BaseItem {
 
 interface Props<T extends BaseItem> {
 	tiles: T[];
+	style?: styles;
 	onChange(items: T[]): void;
 	renderItem(item: T): ReactNode;
 }
 
 export const Section = <T extends BaseItem>({
 	tiles,
+	style=styles.list,
 	onChange,
 	renderItem,
 }: Props<T>) => {
@@ -64,14 +72,24 @@ export const Section = <T extends BaseItem>({
 			}}
 		>
 			<SortableContext items={tiles}>
-				<ul className="SortableList" role="application">
-					{tiles.map((tile) => (
-						<React.Fragment key={tile.id}>{renderItem(tile)}</React.Fragment>
-					))}
-				</ul>
+				{style == styles.list &&
+					<ul className="SortableList" role="application">
+						{tiles.map((tile) => (
+							<React.Fragment key={tile.id}>{renderItem(tile)}</React.Fragment>
+						))}
+					</ul>
+				}
+				{style == styles.grid &&
+					<Grid columns={5}>
+            {tiles.map((tile) => (
+							<React.Fragment key={tile.id}>{renderItem(tile)}</React.Fragment>
+						))}
+          </Grid>
+				}
 			</SortableContext>
 		</DndContext>
 	)
 }
 
 Section.Tile = Tile;
+Section.Styles = styles;
