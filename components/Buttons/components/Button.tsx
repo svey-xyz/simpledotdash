@@ -7,7 +7,7 @@ import Image from 'next/image';
 type Props = {
 	Icon: React.JSX.ElementType;
 	handler: (props?:{}) => Promise<void>;
-	method: string;
+	method?: string;
 };
 
 

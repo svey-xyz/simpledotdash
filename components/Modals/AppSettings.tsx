@@ -8,7 +8,7 @@ export const AppSettings = ({ app }: { app?: any }) => {
 
 	return (
 		<Modal icon={PencilSquareIcon}>
-			<form method='dialog' className='flex flex-col gap-4'>
+			<form method='dialog' className='flex flex-col gap-4 w-fit'>
 				<label className='flex flex-row justify-between gap-3'>
 					Title:
 					<input type="text" name="title" defaultValue={app?.title} />

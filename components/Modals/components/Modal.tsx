@@ -23,10 +23,10 @@ export const Modal = ({ icon, children }: { icon: React.JSX.ElementType, childre
 		<div>
 			<Button Icon={icon} handler={handleModalVisibility} />
 			{ReactDOM.createPortal(
-			<dialog className="absolute w-screen h-screen top-0 left-0 flex flex-col"
+			<dialog className="absolute w-screen min-h-screen top-0 left-0 flex flex-col items-center justify-center p-16"
 				style={{ visibility: visibility ? 'visible' : 'hidden' }}>
 					<FocusLock returnFocus={true} autoFocus={true}
-						className='relative flex flex-col mx-auto my-auto p-8 bg-bg rounded-md shadow-md'>
+						className='relative flex flex-col w-fit p-8 bg-bg rounded-md shadow-md m-auto'>
 						<Button Icon={XMarkIcon} handler={handleModalVisibility} />
 
 						{children}
