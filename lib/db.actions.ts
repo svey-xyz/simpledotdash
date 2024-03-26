@@ -19,3 +19,7 @@ export const updateSettings = async (data:{}) => {
 export const getSettings = async () => {
 	return await prisma.settings.findFirst({ where: { id: 0 }});
 }
+
+export const getAppFields = async () => {
+	return Object.keys(prisma.app.fields)
+}
