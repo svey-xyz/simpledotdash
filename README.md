@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# simpledotdash
 
-## Getting Started
+A homelab dashboard built by [svey](https://svey.xyz), using [Next.js](https://nextjs.org/), [Prisma](https://www.prisma.io/), and [tailwindcss](https://tailwindcss.com/).
 
-First, run the development server:
+## Info
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+⚠️ This project underwent a major shift in direction and requires significant work before being usable again.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Roadmap
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The long term plan for this project is to create a dead simple dashboard that can be hosted in a container and shared by many users on a network. To achieve this session handling is done with [NextAuth.js](https://next-auth.js.org/), drag n' drop is implemented with [dnd kit](https://dndkit.com/), and all of the menu's and layout is thoughtfully designed.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Apps
 
-## Learn More
+#### Basic functionality
+The most basic function of **simpledotdash** is to act as a homepage for your homelab. Allowing you to create stylish bookmarks for all of your self-hosted apps.
 
-To learn more about Next.js, take a look at the following resources:
+### Long term goals
+App cards that can dynamically pull data from some of the more popular self-hosted applications (e.g. Unraid, Plex, etc.), and display it directly in the dashboard.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Bookmarks	
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Basic functionality
+Very similar to apps, bookmarks are a way to link to external sites and resources that you may need regular access to.
 
-## Deploy on Vercel
+### Widgets
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### Basic functionality
+To create a more dynamic homepage for your lab there will be many built in widgets to display everything from time & weather to the standings of your favourite e-sports team.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### Long term goals
+Custom widgets that for advanced users.
+
+## Setup & Installation
+I'm glad you're excited enough about this project to have read this far! Unfortunately, it is not ready for deployment yet.
+
+## License
+[MIT](/blob/main/LICENSE) © svey

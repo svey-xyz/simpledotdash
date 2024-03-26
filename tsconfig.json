@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    // "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -15,20 +19,42 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
+		"typeRoots": [
+			"node_modules/@types",
+			"lib/@types"
+		],
     "paths": {
-      "@/*": ["./*"],
-			"@styles/*": ["./app/_styles/*"],
-			"@public/*": ["./app/_public/*"],
-			"@components/*": ["./app/_components/*"],
-			"@lib/*": ["./lib/*"],
-			"@dashboard/*": ["./app/(dashboard)/*"],
-			"@data/*": ["./app/_data/*"],
-			"@helpers/*": ["./app/_helpers/*"],
+
+      "@styles/*": [
+        "./styles/*"
+      ],
+      "@public/*": [
+        "./public/*"
+      ],
+      "@components/*": [
+        "./components/*"
+      ],
+      "@lib/*": [
+        "./lib/*"
+      ],
+      "@data/*": [
+        "./app/_data/*"
+      ]
     },
+    "strict": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "include": [
+		"/lib/@types/nextauth.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "prisma"
+  ]
 }

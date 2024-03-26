@@ -17,6 +17,13 @@ bun.lockb
 # production
 /build
 
+# app data
+/prisma/migrations/
+/prisma/data/
+/server/prisma/data/
+/server/data/
+
+
 # misc
 .DS_Store
 *.pem
@@ -28,6 +35,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
