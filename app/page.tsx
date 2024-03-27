@@ -1,18 +1,30 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AppCard } from "@components/AppCard"
 import { Section } from "@components/Tiles"
 import { Edit } from "@components/Buttons"
 import { useSession } from "next-auth/react"
 import { AppSettings } from "@components/Modals"
+import { getUser } from "@lib/db.actions"
+
+import { App } from "@prisma/client"
 
 export default function Home() {
+	const [apps, setApps] = useState<Array<App>>(null)
 
 	const session = useSession()
 
-	const user = session.data?.user
-	const [apps, setApps] = useState(user?.apps);
+	const updateApps = () => {
+		if (!session.data) return
+		getUser(session.data?.user).then((user) => {
+			setApps(user.apps)
+		})
+	}
+
+	useEffect(() => {
+		updateApps()
+	}, [setApps, session])
 
 	if (session.status == 'unauthenticated') return <></>
 	if (session.status !== 'authenticated') return <></>
@@ -30,7 +42,7 @@ export default function Home() {
 				)} />
 			)}
 			<Edit />
-			<AppSettings />
+			<AppSettings handleUpdate={updateApps}/>
 		</div>
 	)
 }

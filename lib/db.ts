@@ -18,4 +18,4 @@ const userWithObjects = Prisma.validator<Prisma.UserDefaultArgs>()({
 	include: { apps: true, sessions: true, accounts: true },
 })
 
-type UserWithObjects = Prisma.UserGetPayload<typeof userWithObjects>
+export type UserWithObjects = Prisma.UserGetPayload<typeof userWithObjects>

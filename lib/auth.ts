@@ -9,6 +9,9 @@ import { Adapter, AdapterAccount } from "next-auth/adapters";
 
 export const config = {
 	// Configure one or more authentication providers
+	session: {
+		strategy: 'database'
+	},
 	providers: [
 		GitHubProvider({
 			clientId: process.env.GITHUB_ID as string,
@@ -21,22 +24,38 @@ export const config = {
 	],
 	adapter: PrismaAdapter(prisma),
 	callbacks: {
-		async jwt({ token, user, trigger, session }) {
+		async signIn({ user, account, profile, email, credentials }) {
+			return user ? true : false
+		},
+		async redirect({ url, baseUrl }) {
+			if (url.startsWith(baseUrl)) return url
+			if (url.startsWith('/')) return new URL(url, baseUrl).toString()
+			return baseUrl
+		},
+		async jwt({ token, user, trigger, session, account }) {
 			/* Step 1: update the token based on the user object */
 			if (trigger === "update" && session?.editing) {
 				// Note, that `session` can be any arbitrary object, remember to validate it!
 				token.editing = session.editing
 			}
+			if (account) {
+				token.id = account.userId
+			}
 			if (user) {
 				token.editing = user.editing;
+				token.id = user.id;
 			}
 			return token;
 		},
 		async session({ session, token, user, trigger, newSession }) {
-			console.log("New Session: ", newSession)
 			// Send properties to the client, like an access_token and user id from a provider.
 			if (token && session.user) {
 				session.user.editing = token.editing;
+				session.user.id = token.id;
+			}
+
+			if (user) {
+				session.user.id = user.id
 			}
 
 			// Note, that `rest.session` can be any arbitrary object, remember to validate it!

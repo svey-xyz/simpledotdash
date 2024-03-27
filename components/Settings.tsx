@@ -68,12 +68,10 @@ const AuthButton = ({ method, children }: { method: React.MouseEventHandler<HTML
 }
 
 export const EditButton = ({}:{}) => {
-	// const user = useSession().data?.user
 	const { data: session, status, update } = useSession()
 	const editing = session?.user?.editing
 	const handleEnterEdit = async() => {
 		update({ editing: !editing })
-		console.log('Editing')
 	}
 
 	return (

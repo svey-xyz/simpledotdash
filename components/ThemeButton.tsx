@@ -23,7 +23,6 @@ export function ThemeButton() {
 		const nextTheme = (curThemeIndex + 1) < (themes.length) ? themes[curThemeIndex + 1] : themes[0]
 		setTheme(nextTheme)
 		themeRender()
-		console.log(session.user?.editing)
 	})
 
 	if (!mounted || !theme) return <MoonIcon className="z-10 block text-fg-primary relative h-icon w-icon duration-100 hover:scale-[1.2]" />
