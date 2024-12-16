@@ -36,7 +36,7 @@ export default function Home() {
 			</div>
 			{(apps &&
 				<Section tiles={apps} style={Section.Styles.grid} onChange={setApps} renderItem={(tile) => (
-					<Section.Tile id={tile.id}>
+					<Section.Tile id={tile.id} app={tile}>
 						<AppCard app={tile}/>
 					</Section.Tile>
 				)} />

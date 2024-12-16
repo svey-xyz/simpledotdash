@@ -51,6 +51,23 @@ export const updateApp = async (data: FormData, userId:string) => {
 	}
 }
 
+export const removeApp = async (app: App, userId: string) => {
+	try {
+		const updatedUser = await prisma.user.update({
+			where: { id: userId },
+			data: {
+				apps: {
+					delete: app
+				}
+			}
+		})
+		revalidatePath('/');
+		return true
+	} catch (error) {
+		return new Error(`Bad data: ${error}`)
+	}
+}
+
 const sanitizeAppData = async (data:{}) => {
 
 }
