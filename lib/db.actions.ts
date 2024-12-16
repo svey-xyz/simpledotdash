@@ -61,11 +61,12 @@ export const removeApp = async (app: App, userId: string) => {
 				}
 			}
 		})
-		revalidatePath('/');
+
 		return true
 	} catch (error) {
 		return new Error(`Bad data: ${error}`)
 	}
+	
 }
 
 const sanitizeAppData = async (data:{}) => {
