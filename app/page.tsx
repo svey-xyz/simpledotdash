@@ -26,7 +26,6 @@ export default function Home() {
 		updateApps()
 	}, [setApps, session])
 
-	if (session.status == 'unauthenticated') return <></>
 	if (session.status !== 'authenticated') return <></>
 
 	return (
@@ -36,7 +35,7 @@ export default function Home() {
 			</div>
 			{(apps &&
 				<Section tiles={apps} style={Section.Styles.grid} onChange={setApps} renderItem={(tile) => (
-					<Section.Tile id={tile.id} app={tile}>
+					<Section.Tile id={tile.id} app={tile} handleUpdate={updateApps}>
 						<AppCard app={tile}/>
 					</Section.Tile>
 				)} />

@@ -12,7 +12,8 @@ import { revalidatePath } from "next/cache";
 
 interface Props {
 	id: UniqueIdentifier;
-	app: App
+	app: App;
+	handleUpdate: () => void;
 }
 
 
@@ -29,7 +30,7 @@ const SortableItemContext = createContext<Context>({
 	ref() { }
 });
 
-export const Tile = ({ children, id, app }: PropsWithChildren<Props>) => {
+export const Tile = ({ children, id, app, handleUpdate }: PropsWithChildren<Props>) => {
 	const session = useSession()
 	const user = session.data?.user
 	const editMode = user?.editing
@@ -62,6 +63,7 @@ export const Tile = ({ children, id, app }: PropsWithChildren<Props>) => {
 	const deleteAppCard = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		e.stopPropagation();
 		await removeApp(app, user.id)
+		handleUpdate()
 	}
 
 	return (
