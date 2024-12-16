@@ -7,21 +7,34 @@ import prisma from "@lib/db";
 import { Prisma, PrismaClient } from "@prisma/client"
 import { Adapter, AdapterAccount } from "next-auth/adapters";
 
+const genProviders = () => {
+	const providers = []
+
+	if (process.env.GITHUB_ID && process.env.GITHUB_SECRET)
+		providers.push(
+			GitHubProvider({
+				clientId: process.env.GITHUB_ID as string,
+				clientSecret: process.env.GITHUB_SECRET as string,
+			})
+		)
+
+	if (process.env.DISCORD_CLIENT_ID && process.env.DISCORD_CLIENT_SECRET)
+		providers.push(
+			DiscordProvider({
+				clientId: process.env.DISCORD_CLIENT_ID as string,
+				clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+			})
+		)
+
+	return providers
+}
+
 export const config = {
 	// Configure one or more authentication providers
 	session: {
 		strategy: 'database'
 	},
-	providers: [
-		GitHubProvider({
-			clientId: process.env.GITHUB_ID as string,
-			clientSecret: process.env.GITHUB_SECRET as string,
-		}),
-		DiscordProvider({
-			clientId: process.env.DISCORD_CLIENT_ID as string,
-			clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
-		}),
-	],
+	providers: genProviders(),
 	adapter: PrismaAdapter(prisma),
 	callbacks: {
 		async signIn({ user, account, profile, email, credentials }) {
