@@ -1,6 +1,9 @@
+'use client'
+
 import React, { CSSProperties, PropsWithChildren, createContext, useMemo } from "react";
 import { DraggableSyntheticListeners, UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable"
+import { useSession } from "next-auth/react";
 
 interface Props {
 	id: UniqueIdentifier;
@@ -19,6 +22,10 @@ const SortableItemContext = createContext<Context>({
 });
 
 export const Tile = ({ children, id }: PropsWithChildren<Props>) => {
+	const session = useSession()
+	const user = session.data?.user
+	const editMode = user?.editing
+	
 	const {
 		attributes,
 		isDragging,
@@ -32,8 +39,8 @@ export const Tile = ({ children, id }: PropsWithChildren<Props>) => {
 	const context = useMemo(
 		() => ({
 			attributes,
-			listeners,
-			ref: setActivatorNodeRef
+			listeners: editMode ? listeners : {},
+			ref: setActivatorNodeRef,
 		}),
 		[attributes, listeners, setActivatorNodeRef]
 	);
@@ -43,10 +50,11 @@ export const Tile = ({ children, id }: PropsWithChildren<Props>) => {
 		transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
 		transition
 	};
+	console.log('editmode: ', editMode)
 
 	return (
-		<SortableItemContext.Provider value={context}>
-			<div ref={setNodeRef} style={style} {...attributes} {...listeners} >
+		<SortableItemContext.Provider value={context} >
+			<div ref={setNodeRef} style={style} {...attributes} {...(editMode ? listeners : {})} >
 				{ children }
 			</div>
 		</SortableItemContext.Provider>
