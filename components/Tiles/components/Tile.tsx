@@ -5,18 +5,12 @@ import { DraggableSyntheticListeners, UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable"
 import { useSession } from "next-auth/react";
 import { XMarkIcon } from "@heroicons/react/24/solid"
-import { removeApp } from "@lib/db.actions";
-import { App } from '@prisma/client';
-import { revalidatePath } from "next/cache";
 
 
 interface Props {
 	id: UniqueIdentifier;
-	app: App;
-	handleUpdate: () => void;
+	removeItem?: (id: UniqueIdentifier) => void;
 }
-
-
 
 interface Context {
 	attributes: Record<string, any>;
@@ -30,7 +24,7 @@ const SortableItemContext = createContext<Context>({
 	ref() { }
 });
 
-export const Tile = ({ children, id, app, handleUpdate }: PropsWithChildren<Props>) => {
+export const Tile = ({ children, id, removeItem }: PropsWithChildren<Props>) => {
 	const session = useSession()
 	const user = session.data?.user
 	const editMode = user?.editing
@@ -60,46 +54,30 @@ export const Tile = ({ children, id, app, handleUpdate }: PropsWithChildren<Prop
 		transition
 	};
 
-	const deleteAppCard = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+	const removeTile = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		e.stopPropagation();
-		await removeApp(app, user.id)
-		handleUpdate()
+		if (removeItem) removeItem(id)
 	}
 
 	return (
 		<SortableItemContext.Provider value={context} >
-			<div className="relative">
-				
+			<div
+				ref={setNodeRef}
+				style={style}
+				{...attributes}
+				className="relative"
+			>
 				<div
-					ref={setNodeRef}
-					style={style}
-					{...attributes}
-					className="relative"
+					className={`absolute rounded-full backdrop-blur-md z-50 top-0 right-0 bg-accent-failure/40 border border-solid border-accent-failure translate-x-1/4 -translate-y-1/4 pointer-events-auto
+						${editMode ? 'visible' : 'hidden'}`}
+					onClick={removeTile}
 				>
-					<div
-						className={`absolute rounded-full backdrop-blur-md z-50 top-0 right-0 bg-accent-failure/40 border border-solid border-accent-failure translate-x-1/4 -translate-y-1/4 pointer-events-auto
-					${editMode ? 'visible' : 'hidden'}`}
-						onClick={deleteAppCard}
-					>
-						<XMarkIcon className="w-icon h-icon text-accent-failure" />
+					<XMarkIcon className="w-icon h-icon text-accent-failure" />
+				</div>
+				<div {...(editMode ? listeners : {})}>
+					<div className={`${editMode ? 'pointer-events-none' : 'pointer-events-auto'}`}>
+						{children}
 					</div>
-					<div {...(editMode ? listeners : {})}>
-						<a
-
-							className={`group relative flex flex-row border border-transparent-accent rounded-lg py-4 px-6 overflow-hidden
-							before:absolute before:inset-0 before:backdrop-blur-xl before:backdrop-saturate-150 before:bg-[rgba(17, 25, 40, 0.75)]
-							${editMode ? 'pointer-events-none' : 'pointer-events-auto'}
-							`}
-							href={app.url}
-							target="_blank"
-						>
-							<div className="relative">
-								<h4 className='font-bold'>{app.title}</h4>
-								<span className="font-thin">{app.displayURL}</span>
-							</div>
-						</a>
-					</div>
-					
 				</div>
 			</div>
 		</SortableItemContext.Provider>

@@ -6,9 +6,10 @@ import { Section } from "@components/Tiles"
 import { Edit } from "@components/Buttons"
 import { useSession } from "next-auth/react"
 import { AppSettings } from "@components/Modals"
-import { getUser } from "@lib/db.actions"
+import { deleteApp, getUser } from "@lib/db.actions"
 
 import { App } from "@prisma/client"
+import { UniqueIdentifier } from "@dnd-kit/core"
 
 export default function Home() {
 	const [apps, setApps] = useState<Array<App>>(null)
@@ -26,6 +27,16 @@ export default function Home() {
 		updateApps()
 	}, [setApps, session])
 
+	const removeApp = async (id: UniqueIdentifier) => {
+		if (!session.data) return
+
+		const user = session.data.user
+		const app = apps.find((app) => app.id === id)
+
+		await deleteApp(app, user?.id)
+		updateApps()
+	}
+
 	if (session.status !== 'authenticated') return <></>
 
 	return (
@@ -35,7 +46,7 @@ export default function Home() {
 			</div>
 			{(apps &&
 				<Section tiles={apps} style={Section.Styles.grid} onChange={setApps} renderItem={(tile) => (
-					<Section.Tile id={tile.id} app={tile} handleUpdate={updateApps}>
+				<Section.Tile id={tile.id} removeItem={removeApp}>
 						<AppCard app={tile}/>
 					</Section.Tile>
 				)} />

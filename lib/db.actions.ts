@@ -51,7 +51,7 @@ export const updateApp = async (data: FormData, userId:string) => {
 	}
 }
 
-export const removeApp = async (app: App, userId: string) => {
+export const deleteApp = async (app: App, userId: string) => {
 	try {
 		const updatedUser = await prisma.user.update({
 			where: { id: userId },
