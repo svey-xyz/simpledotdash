@@ -4,10 +4,13 @@ import React, { CSSProperties, PropsWithChildren, createContext, useMemo } from 
 import { DraggableSyntheticListeners, UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable"
 import { useSession } from "next-auth/react";
+import { XMarkIcon } from "@heroicons/react/24/solid"
 
 interface Props {
 	id: UniqueIdentifier;
 }
+
+
 
 interface Context {
 	attributes: Record<string, any>;
@@ -50,11 +53,20 @@ export const Tile = ({ children, id }: PropsWithChildren<Props>) => {
 		transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
 		transition
 	};
-	console.log('editmode: ', editMode)
 
 	return (
 		<SortableItemContext.Provider value={context} >
-			<div ref={setNodeRef} style={style} {...attributes} {...(editMode ? listeners : {})} >
+			<div
+				ref={setNodeRef}
+				style={style}
+				{...attributes}
+				{...(editMode ? listeners : {})}
+				className="relative"
+			>
+				<div className={`absolute rounded-full backdrop-blur-md z-10 top-0 right-0 bg-accent-failure/40 border border-solid border-accent-failure translate-x-1/4 translate-y-1/4
+					${editMode ? 'visible' : 'hidden'}`}>
+					<XMarkIcon className="w-icon h-icon text-accent-failure"/>
+				</div>
 				{ children }
 			</div>
 		</SortableItemContext.Provider>
