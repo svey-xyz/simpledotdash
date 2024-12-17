@@ -1,15 +1,25 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
-import { updateApp } from '@lib/db.actions'
+import { getApp, updateApp } from '@lib/db.actions'
 import { Button } from '@components/Buttons';
 import { useSession } from 'next-auth/react';
 import { App } from '@prisma/client';
+import { UniqueIdentifier } from '@dnd-kit/core';
 
 
-export const AppCardSettings = ({ handleUpdate, app }: { handleUpdate?: () => void, app?: App }) => {
+export const AppCardSettings = ({ handleUpdate, appID }: { handleUpdate?: () => void, appID?: UniqueIdentifier }) => {
 	const session = useSession()
+	const [app, setApp] = useState<App>(null)
+
+	useEffect(() => {
+		const getter = async () => {
+			const app = appID ? await getApp(appID as string) : null
+			setApp(app)
+		}
+		getter()
+	})
 
 	const handleAppSettingsUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -18,7 +28,7 @@ export const AppCardSettings = ({ handleUpdate, app }: { handleUpdate?: () => vo
 		const user = session.data?.user
 
 		updateApp(data, user.id).then(() => {
-			handleUpdate()
+			if (handleUpdate) handleUpdate()
 		})
 
 	}

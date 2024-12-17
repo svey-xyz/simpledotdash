@@ -28,6 +28,12 @@ export const getUser = async (sessionUser: User) => {
 	});
 }
 
+export const getApp = async (appID: string) => {
+	return await prisma.app.findUnique({
+		where: { id: appID }
+	});
+}
+
 
 export const updateApp = async (data: FormData, userId:string) => {
 	var app = {};

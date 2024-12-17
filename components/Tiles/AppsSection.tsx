@@ -45,7 +45,7 @@ export const AppsSection = () => {
 			</div>
 			{(apps &&
 				<Section tiles={apps} style={Section.Styles.grid} onChange={setApps} renderItem={(tile) => (
-					<Section.Tile id={tile.id} removeItem={removeApp}>
+					<Section.Tile id={tile.id} removeItem={removeApp} updateItem={updateApps}>
 						<AppCard app={tile} />
 					</Section.Tile>
 				)} />

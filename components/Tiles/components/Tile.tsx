@@ -4,12 +4,16 @@ import React, { CSSProperties, PropsWithChildren, createContext, useMemo } from 
 import { DraggableSyntheticListeners, UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable"
 import { useSession } from "next-auth/react";
-import { XMarkIcon } from "@heroicons/react/24/solid"
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid"
+import { AppCardSettings } from "@components/AppCardSettings";
+import { Modal } from "@components/Modals/components/Modal";
 
 
 interface Props {
 	id: UniqueIdentifier;
 	removeItem?: (id: UniqueIdentifier) => void;
+	updateItem?: () => void;
+
 }
 
 interface Context {
@@ -24,7 +28,7 @@ const SortableItemContext = createContext<Context>({
 	ref() { }
 });
 
-export const Tile = ({ children, id, removeItem }: PropsWithChildren<Props>) => {
+export const Tile = ({ children, id, removeItem, updateItem }: PropsWithChildren<Props>) => {
 	const session = useSession()
 	const user = session.data?.user
 	const editMode = user?.editing
@@ -67,13 +71,16 @@ export const Tile = ({ children, id, removeItem }: PropsWithChildren<Props>) => 
 				{...attributes}
 				className="relative"
 			>
-				<div
+				{/* <div
 					className={`absolute rounded-full backdrop-blur-md z-50 top-0 right-0 bg-accent-failure/40 border border-solid border-accent-failure translate-x-1/4 -translate-y-1/4 pointer-events-auto
 						${editMode ? 'visible' : 'hidden'}`}
 					onClick={removeTile}
 				>
 					<XMarkIcon className="w-icon h-icon text-accent-failure" />
-				</div>
+				</div> */}
+				<Modal icon={XMarkIcon}>
+					<AppCardSettings appID={id} handleUpdate={updateItem} />
+				</Modal>
 				<div {...(editMode ? listeners : {})}>
 					<div className={`${editMode ? 'pointer-events-none' : 'pointer-events-auto'}`}>
 						{children}
