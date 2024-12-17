@@ -20,10 +20,10 @@ export const Modal = ({ icon, children }: { icon: React.JSX.ElementType, childre
 	}
 
 	return (
-		<div>
+		<div className="">
 			<Button Icon={icon} handler={handleModalVisibility} />
 			{ReactDOM.createPortal(
-			<dialog className="absolute w-screen min-h-screen top-0 left-0 flex flex-col items-center justify-center p-16"
+				<dialog className="absolute w-screen min-h-screen top-0 left-0 flex flex-col items-center justify-center p-16 z-50 bg-bg/50 backdrop-blur-md"
 				style={{ visibility: visibility ? 'visible' : 'hidden' }}>
 					<FocusLock returnFocus={true} autoFocus={true}
 						className='relative flex flex-col w-fit p-8 bg-bg rounded-md shadow-md m-auto'>

@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react"
 import { AppCard } from "@components/AppCard"
 import { Section } from "@components/Tiles"
-import { Edit } from "@components/Buttons"
 import { useSession } from "next-auth/react"
-import { AppSettings } from "@components/Modals"
 import { deleteApp, getUser } from "@lib/db.actions"
 
 import { App } from "@prisma/client"
 import { UniqueIdentifier } from "@dnd-kit/core"
+import { AppCardSettings } from "@components/AppCardSettings"
+import { Modal } from "@components/Modals/components/Modal"
+import { PlusIcon } from "@heroicons/react/24/solid"
 
 export const AppsSection = () => {
 	const [apps, setApps] = useState<Array<App>>(null)
@@ -49,7 +50,9 @@ export const AppsSection = () => {
 					</Section.Tile>
 				)} />
 			)}
-			<AppSettings handleUpdate={updateApps} />
+			<Modal icon={PlusIcon}>
+				<AppCardSettings handleUpdate={updateApps} />
+			</Modal>
 		</div>
 	)
 }
