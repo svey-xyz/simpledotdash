@@ -6,12 +6,11 @@ import { getApp, updateApp } from '@lib/db.actions'
 import { Button } from '@components/Buttons';
 import { useSession } from 'next-auth/react';
 import { App } from '@prisma/client';
-import { UniqueIdentifier } from '@dnd-kit/core';
 
 
-export const AppCardSettings = ({ handleUpdate, appID }: { handleUpdate?: () => void, appID?: UniqueIdentifier }) => {
+export const AppCardSettings = ({ handleUpdate, appID }: { handleUpdate?: () => void, appID?: string }) => {
 	const session = useSession()
-	const [app, setApp] = useState<App>(null)
+	const [app, setApp] = useState<App | null>(null)
 
 	useEffect(() => {
 		const getter = async () => {
@@ -27,10 +26,15 @@ export const AppCardSettings = ({ handleUpdate, appID }: { handleUpdate?: () => 
 		const data = new FormData(e.currentTarget);
 		const user = session.data?.user
 
-		updateApp(data, user.id).then(() => {
+		const UpdatedApp = app ?? {}
+
+		data.forEach(function (value, key) {
+			UpdatedApp[key] = value;
+		});
+
+		updateApp(user.id, app).then(() => {
 			if (handleUpdate) handleUpdate()
 		})
-
 	}
 
 	return (

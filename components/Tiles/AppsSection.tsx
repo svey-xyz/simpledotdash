@@ -13,29 +13,30 @@ import { Modal } from "@components/Modals/components/Modal"
 import { PlusIcon } from "@heroicons/react/24/solid"
 
 export const AppsSection = () => {
-	const [apps, setApps] = useState<Array<App>>(null)
+	const [appList, setAppList] = useState<Array<App>>(null)
 
 	const session = useSession()
 
-	const updateApps = () => {
+	const update = async () => {
 		if (!session.data) return
 		getUser(session.data?.user).then((user) => {
-			setApps(user.apps)
+			setAppList(user.apps)
 		})
+
 	}
 
 	useEffect(() => {
-		updateApps()
-	}, [setApps, session])
+		update()
+	}, [setAppList, session])
 
 	const removeApp = async (id: UniqueIdentifier) => {
 		if (!session.data) return
 
 		const user = session.data.user
-		const app = apps.find((app) => app.id === id)
+		const app = appList.find((app) => app.id === id)
 
 		await deleteApp(app, user?.id)
-		updateApps()
+		update()
 	}
 
 	return (
@@ -43,15 +44,17 @@ export const AppsSection = () => {
 			<div className="relative flex flex-row items-center gap-4">
 				<h2>Apps</h2>
 			</div>
-			{(apps &&
-				<Section tiles={apps} style={Section.Styles.grid} onChange={setApps} renderItem={(tile) => (
-					<Section.Tile id={tile.id} removeItem={removeApp} updateItem={updateApps}>
-						<AppCard app={tile} />
-					</Section.Tile>
-				)} />
+			{(appList &&
+				<Section tiles={appList} style={Section.Styles.grid} onChange={setAppList}
+					renderItem={(tile) => (
+						<Section.Tile id={tile.id} removeItem={removeApp} updateItem={update}>
+							<AppCard app={tile} />
+						</Section.Tile>
+					)}
+				/>
 			)}
 			<Modal icon={PlusIcon}>
-				<AppCardSettings handleUpdate={updateApps} />
+				<AppCardSettings handleUpdate={update} />
 			</Modal>
 		</div>
 	)

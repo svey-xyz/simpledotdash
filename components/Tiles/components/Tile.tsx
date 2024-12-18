@@ -11,7 +11,7 @@ import { Modal } from "@components/Modals/components/Modal";
 
 interface Props {
 	id: UniqueIdentifier;
-	removeItem?: (id: UniqueIdentifier) => void;
+	removeItem?: (id: string) => void;
 	updateItem?: () => void;
 
 }
@@ -60,7 +60,7 @@ export const Tile = ({ children, id, removeItem, updateItem }: PropsWithChildren
 
 	const removeTile = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		e.stopPropagation();
-		if (removeItem) removeItem(id)
+		if (removeItem) removeItem(id as string)
 	}
 
 	return (
@@ -79,7 +79,7 @@ export const Tile = ({ children, id, removeItem, updateItem }: PropsWithChildren
 					<XMarkIcon className="w-icon h-icon text-accent-failure" />
 				</div> */}
 				<Modal icon={XMarkIcon}>
-					<AppCardSettings appID={id} handleUpdate={updateItem} />
+					<AppCardSettings appID={id as string} handleUpdate={updateItem} />
 				</Modal>
 				<div {...(editMode ? listeners : {})}>
 					<div className={`${editMode ? 'pointer-events-none' : 'pointer-events-auto'}`}>

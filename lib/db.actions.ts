@@ -30,30 +30,31 @@ export const getUser = async (sessionUser: User) => {
 
 export const getApp = async (appID: string) => {
 	return await prisma.app.findUnique({
-		where: { id: appID }
+		where: { id: appID },
 	});
 }
 
-
-export const updateApp = async (data: FormData, userId:string) => {
-	var app = {};
-	data.forEach(function (value, key) {
-		app[key] = value;
+export const getUserById = async (userId: string) => {
+	return await prisma.user.findUnique({
+		where: { id: userId },
 	});
+}
+
+export const updateApp = async (userId: string, app?: App) => {
+	const ID = app.id ?? ''
 
 	try {
-		const updatedUser = await prisma.user.update({
-			where: { id: userId },
-			data: {
-				apps: {
-					create: app as App
-				}
-			}
+		const updatedApp = await prisma.app.upsert({
+			where: { id: ID },
+			update: app,
+			create: app,
 		})
+
 		revalidatePath('/');
-		return true
+		return
 	} catch (error) {
-		return new Error(`Bad data: ${error}`)
+		console.log('Error: ', error)
+		return
 	}
 }
 
