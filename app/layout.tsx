@@ -1,11 +1,11 @@
 import { Header } from '@components/Banners'
 import '@styles/globals.css'
 
-import { Inter } from 'next/font/google'
+
 import Head from './head'
 import ThemeHandler from '@components/ThemeHandler';
 
-const inter = Inter({ subsets: ['latin'] })
+
 
 export const metadata = {
 	title: '',
@@ -20,7 +20,7 @@ export default async function RootLayout({
 	children: React.ReactNode,
 }) {
 	return (
-		<html lang="en" className={`${inter.className}`} suppressHydrationWarning>
+		<html lang="en" className={``} suppressHydrationWarning>
 			<Head />
 			<body>
 				<ThemeHandler>

@@ -1,24 +1,25 @@
 'use client'
 
 import React from 'react';
-import { ForwardRefExoticComponent, SVGProps, RefAttributes } from 'react';
-import Image from 'next/image';
 
 type Props = {
 	Icon?: React.JSX.ElementType;
 	title?: string;
 	handler?: (props?:{}) => Promise<void>;
 	method?: string;
+	className?: string;
 };
 
 
-export const Button = ({ Icon, title, handler, method }: Props) => {
+export const Button = ({ Icon, title, handler, method, className }: Props) => {
 	return (
-		<button onClick={handler} formMethod={method}>
+		<button onClick={handler} formMethod={method} className={`${className}`}>
 			{ Icon &&
-				<Icon className="text-fg relative group-hover:scale-[1.1] h-icon w-icon" />
+				<Icon className="text-fg relative group-hover:scale-[1.1] h-icon w-icon max-h-full" />
 			}
-			{ title }
+			{ title &&
+				<span>{title}</span>
+			}
 		</button>
 	);
 };

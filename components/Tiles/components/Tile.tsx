@@ -4,7 +4,7 @@ import React, { CSSProperties, PropsWithChildren, createContext, useMemo } from 
 import { DraggableSyntheticListeners, UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable"
 import { useSession } from "next-auth/react";
-import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid"
+import { AdjustmentsHorizontalIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import { AppCardSettings } from "@components/AppCardSettings";
 import { Modal } from "@components/Modals/components/Modal";
 
@@ -78,9 +78,13 @@ export const Tile = ({ children, id, removeItem, updateItem }: PropsWithChildren
 				>
 					<XMarkIcon className="w-icon h-icon text-accent-failure" />
 				</div> */}
-				<Modal icon={XMarkIcon}>
-					<AppCardSettings appID={id as string} handleUpdate={updateItem} />
-				</Modal>
+				<div className={`absolute rounded-full backdrop-blur-md z-50 top-0 right-0 bg-accent-failure/40
+					${editMode ? 'visible' : 'hidden'}`}>
+					<Modal icon={AdjustmentsHorizontalIcon} className="p-1">
+						<AppCardSettings appID={id as string} handleUpdate={updateItem} />
+					</Modal>
+				</div>
+				
 				<div {...(editMode ? listeners : {})}>
 					<div className={`${editMode ? 'pointer-events-none' : 'pointer-events-auto'}`}>
 						{children}

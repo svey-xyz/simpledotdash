@@ -1,13 +1,18 @@
 'use client'
 
-import React, { useEffect, useState } from "react"
+import React, { PropsWithChildren, useEffect, useState } from "react"
 import { ReactNode } from "react"
 import { Button } from "../../Buttons/index"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import ReactDOM from "react-dom";
 import FocusLock from 'react-focus-lock';
 
-export const Modal = ({ icon, children }: { icon: React.JSX.ElementType, children?: ReactNode }) => {
+type Props = {
+	icon?: React.JSX.ElementType;
+	className?: string;
+};
+
+export const Modal = ({ icon, children, className }: PropsWithChildren<Props>) => {
 	const [mounted, setMounted] = useState(false)
 	const [visibility, setVisibility] = useState<boolean>(false)
 
@@ -21,8 +26,8 @@ export const Modal = ({ icon, children }: { icon: React.JSX.ElementType, childre
 
 	if (!mounted) return <></>
 	return (
-		<div className="">
-			<Button Icon={icon} handler={handleModalVisibility} />
+		<div className="relative flex">
+			<Button Icon={icon} handler={handleModalVisibility} className={`${className}`} />
 			{ ReactDOM.createPortal(
 				<dialog className="absolute w-screen min-h-screen top-0 left-0 flex flex-col items-center justify-center p-16 z-50 bg-bg/50 backdrop-blur-md"
 				style={{ visibility: visibility ? 'visible' : 'hidden' }}>
