@@ -1,5 +1,5 @@
-import EditableText from "@components/EditableText";
-import { Button } from "@components/Settings";
+import { EditableText } from "@components/ui";
+import { Button } from "@components/User/Settings";
 import { getSettings, updateSettings } from "@lib/db.actions";
 import React from "react";
 

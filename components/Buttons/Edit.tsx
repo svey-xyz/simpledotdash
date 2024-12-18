@@ -3,7 +3,7 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
-import { Button } from './components/Button';
+import { Button } from '../ui/Button';
 
 
 export const Edit = ({}: {}) => {

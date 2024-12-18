@@ -1,18 +1,19 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { AppCard } from "@components/AppCard"
-import { Section } from "@components/Tiles"
+import { DnD } from "@components/ui"
 import { useSession } from "next-auth/react"
 import { deleteApp, getUser } from "@lib/db.actions"
 
 import { App } from "@prisma/client"
-import { UniqueIdentifier } from "@dnd-kit/core"
-import { AppCardSettings } from "@components/AppCardSettings"
-import { Modal } from "@components/Modals/components/Modal"
+import { Modal } from "@components/ui/Modal"
 import { PlusIcon } from "@heroicons/react/24/solid"
 
-export const AppsSection = () => {
+import { Card } from "./Card"
+import { Settings } from "./Settings"
+
+
+export const Section = () => {
 	const [appList, setAppList] = useState<Array<App>>(null)
 
 	const session = useSession()
@@ -29,7 +30,7 @@ export const AppsSection = () => {
 		update()
 	}, [status])
 
-	const removeApp = async (id: UniqueIdentifier) => {
+	const removeApp = async (id: string) => {
 		const app = appList.find((app) => app.id === id)
 
 		await deleteApp(app)
@@ -42,16 +43,16 @@ export const AppsSection = () => {
 				<h2>Apps</h2>
 			</div>
 			{(appList &&
-				<Section tiles={appList} style={Section.Styles.grid} onChange={setAppList}
+				<DnD.Section tiles={appList} style={DnD.Styles.grid} onChange={setAppList}
 					renderItem={(tile) => (
-						<Section.Tile id={tile.id} removeItem={removeApp} updateItem={update}>
-							<AppCard app={tile} />
-						</Section.Tile>
+						<DnD.Tile id={tile.id} removeItem={removeApp} updateItem={update}>
+							<Card app={tile} />
+						</DnD.Tile>
 					)}
 				/>
 			)}
 			<Modal icon={PlusIcon}>
-				<AppCardSettings handleUpdate={update} />
+				<Settings handleUpdate={update} />
 			</Modal>
 		</div>
 	)

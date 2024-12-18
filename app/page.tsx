@@ -1,5 +1,5 @@
 import { Edit } from "@components/Buttons"
-import { AppsSection } from "@components/Tiles/AppsSection"
+import { Section as AppSection } from "@components/Apps/Section"
 
 const Home = () => {
 	// const session = useSession()
@@ -11,7 +11,7 @@ const Home = () => {
 			<div className="relative flex flex-row items-center gap-4">
 				<h2>Apps</h2>
 			</div>
-			<AppsSection />
+			<AppSection />
 			<Edit />
 		</div>
 	)

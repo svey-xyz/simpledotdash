@@ -2,7 +2,7 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { Cog6ToothIcon, WrenchIcon } from '@heroicons/react/24/solid';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import ThemeButton from '@components/ThemeButton';
+import { Theme } from '@components/Buttons';
 
 export const Button = ({}:{}) => {
 	const [mounted, setMounted] = useState(false)
@@ -32,7 +32,7 @@ const Modal = ({visibility}:{visibility:boolean}) => {
 			style={{ visibility: visibility ? 'visible' : 'hidden' }}>
 			<div className='relative w-full min-w-full flex flex-col justify-end items-end'>
 				<div className='w-full min-w-full bg-fg/20 py-8 px-4'>
-					<ThemeButton />
+					<Theme />
 					{(session.status == "unauthenticated") &&
 						<div className='flex flex-col gap-4'>
 							<AuthButton method={async () => await signIn("github")}>

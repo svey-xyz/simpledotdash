@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo, useState, ReactNode } from "react";
 
 import {
@@ -14,10 +16,9 @@ import {
 	sortableKeyboardCoordinates
 } from "@dnd-kit/sortable";
 
-import { Tile } from "./Tile";
-import { Grid } from "./Grid"
+import { Grid } from "../Grid"
 
-enum styles {
+export enum styles {
 	list,
 	grid,
 }
@@ -90,6 +91,3 @@ export const Section = <T extends BaseItem>({
 		</DndContext>
 	)
 }
-
-Section.Tile = Tile;
-Section.Styles = styles;

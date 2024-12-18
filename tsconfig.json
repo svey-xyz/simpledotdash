@@ -37,6 +37,9 @@
       "@components/*": [
         "./components/*"
       ],
+			"@ui/*": [
+				"./components/ui/*"
+			],
       "@lib/*": [
         "./lib/*"
       ],

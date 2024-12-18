@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 import { deleteApp, getApp, updateApp } from '@lib/db.actions'
-import { Button } from '@components/Buttons';
+import { Button } from '@components/ui';
 import { App } from '@prisma/client';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 }
 
 
-export const AppCardSettings = ({ handleUpdate, appID, modalStateVisibility }: Props) => {
+export const Settings = ({ handleUpdate, appID, modalStateVisibility }: Props) => {
 	const [app, setApp] = useState<App | null>(null)
 
 	useEffect(() => {

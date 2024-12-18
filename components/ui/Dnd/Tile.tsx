@@ -5,8 +5,8 @@ import { DraggableSyntheticListeners, UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable"
 import { useSession } from "next-auth/react";
 import { AdjustmentsHorizontalIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid"
-import { AppCardSettings } from "@components/AppCardSettings";
-import { Modal } from "@components/Modals/components/Modal";
+import { Settings } from "@components/Apps/Settings";
+import { Modal } from "@components/ui/Modal";
 
 
 interface Props {
@@ -77,7 +77,7 @@ export const Tile = ({ children, id, removeItem, updateItem }: PropsWithChildren
 				<div className={`absolute rounded-full backdrop-blur-md z-50 top-0 right-0 bg-accent-failure/40
 					${editMode ? 'visible' : 'hidden'}`}>
 					<Modal icon={AdjustmentsHorizontalIcon} className="p-1" visibility={visibility} setVisibility={setVisibility}>
-						<AppCardSettings appID={id as string} handleUpdate={updateItem} modalStateVisibility={setVisibility}/>
+						<Settings appID={id as string} handleUpdate={updateItem} modalStateVisibility={setVisibility}/>
 					</Modal>
 				</div>
 				<div {...(editMode ? listeners : {})}>

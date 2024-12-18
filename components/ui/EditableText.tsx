@@ -4,7 +4,7 @@ import { Settings } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 
-const EditableText = ({ initialText, saveData }: { initialText: string, saveData?: (data:{}) => Promise<any> }) => {
+export const EditableText = ({ initialText, saveData }: { initialText: string, saveData?: (data:{}) => Promise<any> }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const session = useSession()
@@ -28,5 +28,3 @@ const EditableText = ({ initialText, saveData }: { initialText: string, saveData
 		</div>
 	);
 };
-
-export default EditableText;

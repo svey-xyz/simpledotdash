@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { useSession } from 'next-auth/react';
 
-export function ThemeButton() {
+export const Theme = () => {
 
 	const [mounted, setMounted] = useState(false)
 	const { theme, setTheme } = useTheme()
@@ -35,5 +35,3 @@ export function ThemeButton() {
 		</button>
 	)
 }
-
-export default ThemeButton;

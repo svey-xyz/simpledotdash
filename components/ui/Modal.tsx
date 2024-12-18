@@ -1,8 +1,7 @@
 'use client'
 
 import React, { PropsWithChildren, useEffect, useState } from "react"
-import { ReactNode } from "react"
-import { Button } from "../../Buttons/index"
+import { Button } from "./Button"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import ReactDOM from "react-dom";
 import FocusLock from 'react-focus-lock';

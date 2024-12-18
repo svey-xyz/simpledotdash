@@ -1,7 +1,7 @@
 import React from "react";
 import { App } from "@lib/data.schema"
 
-export const AppCard = ({ app }: {app:App}) => {
+export const Card = ({ app }: {app:App}) => {
 	// const Icon = app.icon ? await DynamicIcon({id:app.icon}) as ElementType : undefined
 	// const { attributes, listeners, setNodeRef, transform } = useDraggable({
 	// 	id: app.title,
