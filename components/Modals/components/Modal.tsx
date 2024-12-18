@@ -10,11 +10,13 @@ import FocusLock from 'react-focus-lock';
 type Props = {
 	icon?: React.JSX.ElementType;
 	className?: string;
+	visibility?: boolean
+	setVisibility?: React.Dispatch<React.SetStateAction<boolean>>
 };
 
-export const Modal = ({ icon, children, className }: PropsWithChildren<Props>) => {
+export const Modal = ({ icon, children, className, visibility, setVisibility }: PropsWithChildren<Props>) => {
 	const [mounted, setMounted] = useState(false)
-	const [visibility, setVisibility] = useState<boolean>(false)
+	// const [visibility, setVisibility] = useState<boolean>(false)
 
 	useEffect(() => {
 		setMounted(true)

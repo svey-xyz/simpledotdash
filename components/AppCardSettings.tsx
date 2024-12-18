@@ -2,14 +2,18 @@
 
 import React, { useEffect, useState } from 'react';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
-import { getApp, updateApp } from '@lib/db.actions'
+import { deleteApp, getApp, updateApp } from '@lib/db.actions'
 import { Button } from '@components/Buttons';
-import { useSession } from 'next-auth/react';
 import { App } from '@prisma/client';
 
+type Props = {
+	handleUpdate?: () => void,
+	appID?: string,
+	modalStateVisibility?: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-export const AppCardSettings = ({ handleUpdate, appID }: { handleUpdate?: () => void, appID?: string }) => {
-	const session = useSession()
+
+export const AppCardSettings = ({ handleUpdate, appID, modalStateVisibility }: Props) => {
 	const [app, setApp] = useState<App | null>(null)
 
 	useEffect(() => {
@@ -18,13 +22,12 @@ export const AppCardSettings = ({ handleUpdate, appID }: { handleUpdate?: () => 
 			setApp(app)
 		}
 		getter()
-	})
+	}, [])
 
 	const handleAppSettingsUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const data = new FormData(e.currentTarget);
-		const user = session.data?.user
 
 		const UpdatedApp = app ?? {}
 
@@ -32,30 +35,58 @@ export const AppCardSettings = ({ handleUpdate, appID }: { handleUpdate?: () => 
 			UpdatedApp[key] = value;
 		});
 
-		updateApp(user.id, app).then(() => {
+		updateApp(app).then(() => {
 			if (handleUpdate) handleUpdate()
+			if (modalStateVisibility) modalStateVisibility(false)
+
 		})
 	}
 
+	const removeApp = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		e.stopPropagation();
+
+		await deleteApp(app)
+		if (handleUpdate) handleUpdate()
+		if (modalStateVisibility) modalStateVisibility(false)
+
+	}
+
 	return (
-		<form method='dialog' className='flex flex-col gap-4 w-fit' onSubmit={handleAppSettingsUpdate}>
-			<label className='flex flex-row justify-between gap-3'>
-				Title:
-				<input type="text" name="title" defaultValue={app?.title} required />
-			</label>
-			<label className='flex flex-row justify-between gap-3'>
-				URL:
-				<input type="text" name="url" defaultValue={app?.url} required />
-			</label>
-			<label className='flex flex-row justify-between gap-3'>
-				Display URL:
-				<input type="text" name="displayURL" defaultValue={app?.displayURL} />
-			</label>
-			<label className='flex flex-row justify-between gap-3'>
-				Description:
-				<textarea name="description" defaultValue={app?.description} />
-			</label>
-			<Button Icon={ArrowRightOnRectangleIcon} method='submit' />
-		</form>
+		<div className='relative flex flex-col'>
+			<form method='dialog' className='flex flex-col gap-4 w-fit' onSubmit={handleAppSettingsUpdate}>
+				<label className='flex flex-row justify-between gap-3'>
+					Title:
+					<input type="text" name="title" defaultValue={app?.title} required />
+				</label>
+				<label className='flex flex-row justify-between gap-3'>
+					URL:
+					<input type="text" name="url" defaultValue={app?.url} required />
+				</label>
+				<label className='flex flex-row justify-between gap-3'>
+					Display URL:
+					<input type="text" name="displayURL" defaultValue={app?.displayURL} />
+				</label>
+				<label className='flex flex-row justify-between gap-3'>
+					Description:
+					<textarea name="description" defaultValue={app?.description} />
+				</label>
+				
+				<div className='flex flex-row justify-between'>
+					<Button Icon={ArrowRightOnRectangleIcon} method='submit' />
+
+					{app &&
+						<div
+							className={`text-accent-failure cursor-pointer`}
+							onClick={removeApp}
+						>
+							Delete
+						</div>
+
+					}
+				</div>
+			</form>
+			
+		</div>
+		
 	);
 };

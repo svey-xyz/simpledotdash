@@ -16,26 +16,23 @@ export const AppsSection = () => {
 	const [appList, setAppList] = useState<Array<App>>(null)
 
 	const session = useSession()
+	const status = session
 
 	const update = async () => {
 		if (!session.data) return
-		getUser(session.data?.user).then((user) => {
-			setAppList(user.apps)
-		})
 
+		const user = await getUser(session.data?.user)
+		setAppList(user.apps)
 	}
 
 	useEffect(() => {
 		update()
-	}, [setAppList, session])
+	}, [status])
 
 	const removeApp = async (id: UniqueIdentifier) => {
-		if (!session.data) return
-
-		const user = session.data.user
 		const app = appList.find((app) => app.id === id)
 
-		await deleteApp(app, user?.id)
+		await deleteApp(app)
 		update()
 	}
 

@@ -12,7 +12,7 @@ const EditableText = ({ initialText, saveData }: { initialText: string, saveData
 	const editMode = user?.editing
 
 	useEffect(() => {
-		save()
+		if (!editMode) save()
 	}, [editMode])
 
 	const save = async () => {

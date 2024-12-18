@@ -40,7 +40,7 @@ export const getUserById = async (userId: string) => {
 	});
 }
 
-export const updateApp = async (userId: string, app?: App) => {
+export const updateApp = async (app?: App) => {
 	const ID = app.id ?? ''
 
 	try {
@@ -51,27 +51,24 @@ export const updateApp = async (userId: string, app?: App) => {
 		})
 
 		revalidatePath('/');
-		return
+		return true
 	} catch (error) {
 		console.log('Error: ', error)
-		return
+		return false
 	}
 }
 
-export const deleteApp = async (app: App, userId: string) => {
+export const deleteApp = async (app: App) => {
 	try {
-		const updatedUser = await prisma.user.update({
-			where: { id: userId },
-			data: {
-				apps: {
-					delete: app
-				}
-			}
+		const deletedApp = await prisma.app.delete({
+			where: { id: app.id }
 		})
 
+		revalidatePath('/');
 		return true
 	} catch (error) {
-		return new Error(`Bad data: ${error}`)
+		console.error(new Error(`Bad data: ${error}`))
+		return false
 	}
 	
 }
