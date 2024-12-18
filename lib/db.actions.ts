@@ -12,7 +12,7 @@ export const updateSettings = async (data:{}) => {
 
 	} catch (error) {
 	}
-	revalidatePath('/');
+
 	return settings
 	
 }
@@ -40,17 +40,34 @@ export const getUserById = async (userId: string) => {
 	});
 }
 
-export const updateApp = async (app?: App) => {
+export const updateApp = async (app: App, userId?: string) => {
 	const ID = app.id ?? ''
 
 	try {
 		const updatedApp = await prisma.app.upsert({
 			where: { id: ID },
-			update: app,
-			create: app,
+			update: {
+				title: app.title,
+				url: app.url,
+				displayURL: app.displayURL,
+				description: app.description,
+				icon: app.icon,
+			},
+			create: {
+				id: app.id,
+				title: app.title,
+				url: app.url,
+				displayURL: app.displayURL,
+				description: app.description,
+				icon: app.icon,
+				user: {
+					connect: {
+						id: userId
+					}
+				}
+			},
 		})
 
-		revalidatePath('/');
 		return true
 	} catch (error) {
 		console.log('Error: ', error)
@@ -64,7 +81,6 @@ export const deleteApp = async (app: App) => {
 			where: { id: app.id }
 		})
 
-		revalidatePath('/');
 		return true
 	} catch (error) {
 		console.error(new Error(`Bad data: ${error}`))

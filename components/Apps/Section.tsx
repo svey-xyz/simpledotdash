@@ -7,7 +7,7 @@ import { deleteApp, getUser } from "@lib/db.actions"
 
 import { App } from "@prisma/client"
 import { Modal } from "@components/ui/Modal"
-import { PlusIcon } from "@heroicons/react/24/solid"
+import { AdjustmentsHorizontalIcon, PlusIcon } from "@heroicons/react/24/solid"
 
 import { Card } from "./Card"
 import { Settings } from "./Settings"
@@ -30,13 +30,6 @@ export const Section = () => {
 		update()
 	}, [status])
 
-	const removeApp = async (id: string) => {
-		const app = appList.find((app) => app.id === id)
-
-		await deleteApp(app)
-		update()
-	}
-
 	return (
 		<div className="relative flex flex-col">
 			<div className="relative flex flex-row items-center gap-4">
@@ -44,16 +37,26 @@ export const Section = () => {
 			</div>
 			{(appList &&
 				<DnD.Section tiles={appList} style={DnD.Styles.grid} onChange={setAppList}
-					renderItem={(tile) => (
-						<DnD.Tile id={tile.id} removeItem={removeApp} updateItem={update}>
-							<Card app={tile} />
+					renderItem={(app) => (
+						<DnD.Tile id={app.id} SettingsModal={SettingsModal({ id: (app.id as string), callback: update })}>
+							<Card app={app} />
 						</DnD.Tile>
 					)}
 				/>
 			)}
-			<Modal icon={PlusIcon}>
-				<Settings handleUpdate={update} />
+			<Modal icon={PlusIcon} callback={update}>
+				<Settings handleUpdate={update}/>
 			</Modal>
 		</div>
 	)
 }
+
+{/* <Settings appID={id as string} handleUpdate={updateItem} modalStateVisibility={setVisibility}/> */ }
+const SettingsModal = ({ id, callback }: { id: string, callback:any }) => {
+	return (
+		<Modal icon={AdjustmentsHorizontalIcon} className="p-1" callback={callback} >
+			<Settings appID={id} />
+		</Modal>
+	)
+}
+

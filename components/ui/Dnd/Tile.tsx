@@ -11,9 +11,7 @@ import { Modal } from "@components/ui/Modal";
 
 interface Props {
 	id: UniqueIdentifier;
-	removeItem?: (id: string) => void;
-	updateItem?: () => void;
-
+	SettingsModal?: React.ReactNode
 }
 
 interface Context {
@@ -28,7 +26,7 @@ const SortableItemContext = createContext<Context>({
 	ref() { }
 });
 
-export const Tile = ({ children, id, removeItem, updateItem }: PropsWithChildren<Props>) => {
+export const Tile = ({ children, id, SettingsModal }: PropsWithChildren<Props>) => {
 	const session = useSession()
 	const user = session.data?.user
 	const editMode = user?.editing
@@ -61,11 +59,6 @@ export const Tile = ({ children, id, removeItem, updateItem }: PropsWithChildren
 		transition
 	};
 
-	const removeTile = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-		e.stopPropagation();
-		if (removeItem) removeItem(id as string)
-	}
-
 	return (
 		<SortableItemContext.Provider value={context} >
 			<div
@@ -76,9 +69,7 @@ export const Tile = ({ children, id, removeItem, updateItem }: PropsWithChildren
 			>
 				<div className={`absolute rounded-full backdrop-blur-md z-50 top-0 right-0 bg-accent-failure/40
 					${editMode ? 'visible' : 'hidden'}`}>
-					<Modal icon={AdjustmentsHorizontalIcon} className="p-1" visibility={visibility} setVisibility={setVisibility}>
-						<Settings appID={id as string} handleUpdate={updateItem} modalStateVisibility={setVisibility}/>
-					</Modal>
+					{ SettingsModal }
 				</div>
 				<div {...(editMode ? listeners : {})}>
 					<div className={`${editMode ? 'pointer-events-none' : 'pointer-events-auto'}`}>

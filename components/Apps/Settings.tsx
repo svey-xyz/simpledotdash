@@ -5,16 +5,18 @@ import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 import { deleteApp, getApp, updateApp } from '@lib/db.actions'
 import { Button } from '@components/ui';
 import { App } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 
 type Props = {
 	handleUpdate?: () => void,
 	appID?: string,
-	modalStateVisibility?: React.Dispatch<React.SetStateAction<boolean>>
+	callback?: () => Promise<void>
 }
 
 
-export const Settings = ({ handleUpdate, appID, modalStateVisibility }: Props) => {
+export const Settings = ({ handleUpdate, appID, callback }: Props) => {
 	const [app, setApp] = useState<App | null>(null)
+	const session = useSession()
 
 	useEffect(() => {
 		const getter = async () => {
@@ -26,6 +28,8 @@ export const Settings = ({ handleUpdate, appID, modalStateVisibility }: Props) =
 
 	const handleAppSettingsUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		if (!session.data) return
+		const user = session.data.user
 
 		const data = new FormData(e.currentTarget);
 
@@ -35,10 +39,9 @@ export const Settings = ({ handleUpdate, appID, modalStateVisibility }: Props) =
 			UpdatedApp[key] = value;
 		});
 
-		updateApp(app).then(() => {
-			if (handleUpdate) handleUpdate()
-			if (modalStateVisibility) modalStateVisibility(false)
-
+		updateApp(UpdatedApp as App, user.id).then(() => {
+			// if (handleUpdate) handleUpdate()
+			if (callback) callback()
 		})
 	}
 
@@ -46,8 +49,8 @@ export const Settings = ({ handleUpdate, appID, modalStateVisibility }: Props) =
 		e.stopPropagation();
 
 		await deleteApp(app)
-		if (handleUpdate) handleUpdate()
-		if (modalStateVisibility) modalStateVisibility(false)
+		// if (handleUpdate) handleUpdate()
+		if (callback) callback()
 
 	}
 

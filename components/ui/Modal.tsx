@@ -1,6 +1,6 @@
 'use client'
 
-import React, { PropsWithChildren, useEffect, useState } from "react"
+import React, { PropsWithChildren, ReactElement, useEffect, useState } from "react"
 import { Button } from "./Button"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import ReactDOM from "react-dom";
@@ -9,13 +9,13 @@ import FocusLock from 'react-focus-lock';
 type Props = {
 	icon?: React.JSX.ElementType;
 	className?: string;
-	visibility?: boolean
-	setVisibility?: React.Dispatch<React.SetStateAction<boolean>>
+	children: ReactElement
+	callback?: () => Promise<void>
 };
 
-export const Modal = ({ icon, children, className, visibility, setVisibility }: PropsWithChildren<Props>) => {
+export const Modal = ({ icon, children, className, callback }: Props) => {
 	const [mounted, setMounted] = useState(false)
-	// const [visibility, setVisibility] = useState<boolean>(false)
+	const [visibility, setVisibility] = useState<boolean>(false)
 
 	useEffect(() => {
 		setMounted(true)
@@ -23,6 +23,7 @@ export const Modal = ({ icon, children, className, visibility, setVisibility }: 
 
 	const handleModalVisibility = async () => {
 		if (mounted) setVisibility(!visibility)
+		if (callback) callback()
 	}
 
 	if (!mounted) return <></>
@@ -35,8 +36,7 @@ export const Modal = ({ icon, children, className, visibility, setVisibility }: 
 					<FocusLock returnFocus={true} autoFocus={true}
 						className='relative flex flex-col w-fit p-8 bg-bg rounded-md shadow-md m-auto'>
 						<Button Icon={XMarkIcon} handler={handleModalVisibility} />
-
-						{children}
+						{React.cloneElement(children, { callback: handleModalVisibility }) }
 					</FocusLock>
 			</dialog>
 			, document.body)}
