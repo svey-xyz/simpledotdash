@@ -18,7 +18,7 @@ model Settings {
 }
 
 model App {
-  id String @id @default(cuid())
+  id String @id @unique @default(cuid())
   title String
   url String
 	displayURL String?
@@ -29,7 +29,24 @@ model App {
   user User @relation(fields: [userId], references: [id])
   userId String
 
+	machine Machine @relation(fields: [machineId], references: [id])
+	machineId String
+
 	@@map("apps")
+}
+
+model Machine {
+	id String @id @unique @default(cuid())
+	title String
+	ip String
+	dashboardURL String?
+	description String?
+
+	user User @relation(fields: [userId], references: [id])
+  userId String
+
+	apps App[]
+	@@map("machines")
 }
 
 model Taxonomy {
@@ -52,6 +69,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   apps 					App[]
+	machines 			Machine[]
 
 	@@map(name: "users")
 }

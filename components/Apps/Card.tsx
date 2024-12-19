@@ -1,5 +1,5 @@
 import React from "react";
-import { App } from "@lib/data.schema"
+import { App } from "@prisma/client"
 
 export const Card = ({ app }: {app:App}) => {
 	// const Icon = app.icon ? await DynamicIcon({id:app.icon}) as ElementType : undefined
