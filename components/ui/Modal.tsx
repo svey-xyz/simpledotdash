@@ -31,7 +31,7 @@ export const Modal = ({ icon, children, className, callback, title, description,
 				<Button Icon={icon} handler={async () => setIsOpen(true)} className={`${className}`} />
 			}
 			<Dialog
-				open={isOpen} onClose={() => { manualClose ?? setIsOpen(false) }}
+				open={isOpen} onClose={() => { if (manualClose) setIsOpen(false) }}
 				className="relative z-50"
 			>
 			<div className="fixed inset-0 flex flex-col w-screen min-h-screen items-center justify-center p-16 bg-bg/50 backdrop-blur-md">
