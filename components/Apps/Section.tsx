@@ -44,17 +44,17 @@ export const Section = () => {
 					)}
 				/>
 			)}
-			<Modal icon={PlusIcon} callback={update}>
+			<Modal icon={PlusIcon} callback={update} childrenHaveCallback={true}>
 				<Settings handleUpdate={update}/>
 			</Modal>
 		</div>
 	)
 }
 
-{/* <Settings appID={id as string} handleUpdate={updateItem} modalStateVisibility={setVisibility}/> */ }
+
 const SettingsModal = ({ id, callback }: { id: string, callback:any }) => {
 	return (
-		<Modal icon={AdjustmentsHorizontalIcon} className="p-1" callback={callback} >
+		<Modal icon={AdjustmentsHorizontalIcon} className="p-1" callback={callback} childrenHaveCallback={true}>
 			<Settings appID={id} />
 		</Modal>
 	)

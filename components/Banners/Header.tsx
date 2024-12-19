@@ -1,5 +1,5 @@
 import { EditableText } from "@components/ui";
-import { Button } from "@components/User/Settings";
+import { Settings } from "@components/User/Settings";
 import { getSettings, updateSettings } from "@lib/db.actions";
 import React from "react";
 
@@ -12,7 +12,7 @@ export const Header = async ({}:{}) => {
 				<div className="relative main-padding flex flex-row items-center justify-between z-50">
 					<EditableText initialText={settings.title} saveData={updateSettings} />
 
-					<Button />
+					<Settings />
 				</div>
 			</div>
 		</header>

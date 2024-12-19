@@ -1,18 +1,17 @@
-import { Edit } from "@components/Buttons"
-import { Section as AppSection } from "@components/Apps/Section"
+import { SessionChecker } from "@components/User/SessionChecker"
+import { _PROVIDERS } from "@lib/auth"
 
 const Home = () => {
-	// const session = useSession()
-
-	// if (session.status !== 'authenticated') return <></>
-
+	const providers = _PROVIDERS.flatMap((provider) => {
+		return {
+			name: provider.name,
+			id: provider.id
+		}
+	})
+	
 	return (
 		<div className="relative flex flex-col main-padding pb-24">
-			<div className="relative flex flex-row items-center gap-4">
-				<h2>Apps</h2>
-			</div>
-			<AppSection />
-			<Edit />
+			<SessionChecker providers={providers}/>
 		</div>
 	)
 }

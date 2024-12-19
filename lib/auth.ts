@@ -1,14 +1,15 @@
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next"
-import type { NextAuthOptions } from "next-auth"
+import type { NextAuthOptions, Profile } from "next-auth"
 import { getServerSession } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
 import DiscordProvider from "next-auth/providers/discord";
 import prisma from "@lib/db";
 import { Prisma, PrismaClient } from "@prisma/client"
 import { Adapter, AdapterAccount } from "next-auth/adapters";
+import { OAuthConfig } from "next-auth/providers/oauth";
 
 const genProviders = () => {
-	const providers = []
+	const providers: Array<OAuthConfig<Profile>> = []
 
 	if (process.env.GITHUB_ID && process.env.GITHUB_SECRET)
 		providers.push(
@@ -29,12 +30,14 @@ const genProviders = () => {
 	return providers
 }
 
+export const _PROVIDERS = genProviders()
+
 export const config = {
 	// Configure one or more authentication providers
 	session: {
 		strategy: 'database'
 	},
-	providers: genProviders(),
+	providers: _PROVIDERS,
 	adapter: PrismaAdapter(prisma),
 	callbacks: {
 		async signIn({ user, account, profile, email, credentials }) {

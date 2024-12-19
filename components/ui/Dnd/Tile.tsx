@@ -4,9 +4,6 @@ import React, { CSSProperties, PropsWithChildren, createContext, useMemo, useSta
 import { DraggableSyntheticListeners, UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable"
 import { useSession } from "next-auth/react";
-import { AdjustmentsHorizontalIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid"
-import { Settings } from "@components/Apps/Settings";
-import { Modal } from "@components/ui/Modal";
 
 
 interface Props {
@@ -30,9 +27,6 @@ export const Tile = ({ children, id, SettingsModal }: PropsWithChildren<Props>) 
 	const session = useSession()
 	const user = session.data?.user
 	const editMode = user?.editing
-
-	const [visibility, setVisibility] = useState<boolean>(false)
-
 	
 	const {
 		attributes,
