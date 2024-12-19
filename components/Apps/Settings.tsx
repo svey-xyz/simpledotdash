@@ -6,6 +6,7 @@ import { deleteApp, getApp, updateApp } from '@lib/db.actions'
 import { Button } from '@components/ui';
 import { App } from '@prisma/client';
 import { useSession } from 'next-auth/react';
+import { Field, Fieldset, Input, Label, Legend, Textarea } from '@headlessui/react'
 
 type Props = {
 	handleUpdate?: () => void,
@@ -26,7 +27,7 @@ export const Settings = ({ handleUpdate, appID, callback }: Props) => {
 		getter()
 	}, [])
 
-	const handleAppSettingsUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+	const update = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!session.data) return
 		const user = session.data.user
@@ -40,53 +41,51 @@ export const Settings = ({ handleUpdate, appID, callback }: Props) => {
 		});
 
 		updateApp(UpdatedApp as App, user.id).then(() => {
-			// if (handleUpdate) handleUpdate()
 			if (callback) callback()
 		})
 	}
 
 	const removeApp = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		e.stopPropagation();
-
 		await deleteApp(app)
-		// if (handleUpdate) handleUpdate()
 		if (callback) callback()
-
 	}
 
 	return (
 		<div className='relative flex flex-col'>
-			<form method='dialog' className='flex flex-col gap-4 w-fit' onSubmit={handleAppSettingsUpdate}>
-				<label className='flex flex-row justify-between gap-3'>
-					Title:
-					<input type="text" name="title" defaultValue={app?.title} required />
-				</label>
-				<label className='flex flex-row justify-between gap-3'>
-					URL:
-					<input type="text" name="url" defaultValue={app?.url} required />
-				</label>
-				<label className='flex flex-row justify-between gap-3'>
-					Display URL:
-					<input type="text" name="displayURL" defaultValue={app?.displayURL} />
-				</label>
-				<label className='flex flex-row justify-between gap-3'>
-					Description:
-					<textarea name="description" defaultValue={app?.description} />
-				</label>
-				
-				<div className='flex flex-row justify-between'>
-					<Button Icon={ArrowRightOnRectangleIcon} method='submit' />
+			<form onSubmit={update}>
+				<Fieldset className='flex flex-col gap-4 w-fit'>
+					<Legend className="text-lg font-bold">App Settings</Legend>
+					<Field className={`flex flex-row justify-between gap-3`}>
+						<Label className="block">Title:</Label>
+						<Input className="mt-1 block" name="title" defaultValue={app?.title} required />
+					</Field>
+					<Field className={`flex flex-row justify-between gap-3`}>
+						<Label className="block">URL:</Label>
+						<Input className="mt-1 block" name="url" defaultValue={app?.url} required />
+					</Field>
+					<Field className={`flex flex-row justify-between gap-3`}>
+						<Label className="block">Display URL:</Label>
+						<Input className="mt-1 block" name="displayURL" defaultValue={app?.displayURL} required />
+					</Field>
+					<Field className={`flex flex-row justify-between gap-3`}>
+						<Label className="block">Description:</Label>
+						<Textarea className="mt-1 block" name="description" defaultValue={app?.description} required />
+					</Field>
+					
+					<div className='flex flex-row justify-between'>
+						<Button Icon={ArrowRightOnRectangleIcon} method='submit' />
 
-					{app &&
-						<div
-							className={`text-accent-failure cursor-pointer`}
-							onClick={removeApp}
-						>
-							Delete
-						</div>
+						{app &&
+							<Button
+								title={`Delete`}
+								className={`text-accent-failure cursor-pointer`}
+								handler={removeApp}
+							/>
 
-					}
-				</div>
+						}
+					</div>
+				</Fieldset >
 			</form>
 			
 		</div>

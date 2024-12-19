@@ -1,45 +1,50 @@
 'use client'
 
-import React, { PropsWithChildren, ReactElement, useEffect, useState } from "react"
+import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import React, { ReactElement, useState } from "react"
 import { Button } from "./Button"
 import { XMarkIcon } from "@heroicons/react/24/solid"
-import ReactDOM from "react-dom";
-import FocusLock from 'react-focus-lock';
 
 type Props = {
 	icon?: React.JSX.ElementType;
 	className?: string;
 	children: ReactElement
-	callback?: () => Promise<void>
+	callback?: () => Promise<void>,
+	title?: string,
+	description?: string
 };
 
-export const Modal = ({ icon, children, className, callback }: Props) => {
-	const [mounted, setMounted] = useState(false)
-	const [visibility, setVisibility] = useState<boolean>(false)
+export const Modal = ({ icon, children, className, callback, title, description }: Props) => {
+	const [isOpen, setIsOpen] = useState<boolean>(false)
 
-	useEffect(() => {
-		setMounted(true)
-	}, [])
-
-	const handleModalVisibility = async () => {
-		if (mounted) setVisibility(!visibility)
+	const closeModal = async () => {
+		setIsOpen(false)
 		if (callback) callback()
 	}
 
-	if (!mounted) return <></>
 	return (
 		<div className="relative flex">
-			<Button Icon={icon} handler={handleModalVisibility} className={`${className}`} />
-			{ ReactDOM.createPortal(
-				<dialog className="absolute w-screen min-h-screen top-0 left-0 flex flex-col items-center justify-center p-16 z-50 bg-bg/50 backdrop-blur-md"
-				style={{ visibility: visibility ? 'visible' : 'hidden' }}>
-					<FocusLock returnFocus={true} autoFocus={true}
-						className='relative flex flex-col w-fit p-8 bg-bg rounded-md shadow-md m-auto'>
-						<Button Icon={XMarkIcon} handler={handleModalVisibility} />
-						{React.cloneElement(children, { callback: handleModalVisibility }) }
-					</FocusLock>
-			</dialog>
-			, document.body)}
+			<Button Icon={icon} handler={async () => setIsOpen(true)} className={`${className}`} />
+
+				<Dialog
+					open={isOpen} onClose={() => setIsOpen(false)}
+					className="relative z-50"
+				>
+				<div className="fixed inset-0 flex flex-col w-screen min-h-screen items-center justify-center p-16 bg-bg/50 backdrop-blur-md">
+						<DialogPanel className='relative flex flex-col w-fit p-8 bg-bg rounded-md shadow-md m-auto'>
+							{title &&
+								<DialogTitle className="font-bold">{title}</DialogTitle>
+							}
+							{description &&
+								<Description>{description}</Description>
+							}
+
+							<Button Icon={XMarkIcon} handler={closeModal} />
+							{React.cloneElement(children, { callback: closeModal })}
+						</DialogPanel >
+					</div>
+				</Dialog >
+
 		</div>
 		
 	);

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import { Button as HeadlessButton } from '@headlessui/react'
 
 type Props = {
 	Icon?: React.JSX.ElementType;
@@ -13,13 +14,13 @@ type Props = {
 
 export const Button = ({ Icon, title, handler, method, className }: Props) => {
 	return (
-		<button onClick={handler} formMethod={method} className={`${className}`}>
+		<HeadlessButton onClick={handler} formMethod={method} className={`${className}`}>
 			{ Icon &&
-				<Icon className="text-fg relative group-hover:scale-[1.1] h-icon w-icon max-h-full" />
+				<Icon className="text-fg relative data-[hover]:scale-[1.1] h-icon w-icon" />
 			}
 			{ title &&
 				<span>{title}</span>
 			}
-		</button>
+		</HeadlessButton>
 	);
 };
