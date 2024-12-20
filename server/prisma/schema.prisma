@@ -58,6 +58,9 @@ model Cluster {
 	machines MachineCluster[]
 	apps App[]
 
+	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
 	@@map("clusters")
 }
 
@@ -65,6 +68,7 @@ model Machine {
 	id String @id @unique @default(cuid())
 	title String
 	ip String
+	physical Boolean
 	dashboardURL String?
 	description String?
 
@@ -98,6 +102,7 @@ model User {
   sessions      Session[]
   apps 					App[]
 	machines 			Machine[]
+	clusters			Cluster[]
 	settings      Settings?
 
 	@@map(name: "users")
