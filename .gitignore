@@ -2,13 +2,7 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
 bun.lockb
-
-# testing
-/coverage
 
 # next.js
 /.next/
@@ -18,10 +12,8 @@ bun.lockb
 /build
 
 # app data
-/prisma/migrations/
-/server/data/
-/lib/data.schema
-
+/server/data
+/server/prisma/data.schema
 
 # misc
 .DS_Store

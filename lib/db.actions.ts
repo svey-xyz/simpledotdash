@@ -1,14 +1,13 @@
 'use server'
 
-import { revalidatePath } from 'next/cache';
 import { prisma } from './db'
-import { App, Settings, Session } from '@prisma/client';
+import { App, Settings, Session } from '@prisma/server/data.schema';
 import { User } from 'next-auth';
 
-export const updateSettings = async (data:{}) => {
+export const updateSettings = async (data: Settings) => {
 	let settings: Settings
 	try {
-		settings=await prisma.settings.update({ where: { id: 0 }, data });
+		settings=await prisma.settings.update({ where: { id: data.id }, data });
 
 	} catch (error) {
 	}
@@ -17,14 +16,14 @@ export const updateSettings = async (data:{}) => {
 	
 }
 
-export const getSettings = async () => {
-	return await prisma.settings.findFirst({ where: { id: 0 }});
+export const getSettings = async (sessionUser: User) => {
+	return await prisma.settings.findUnique({ where: { id: sessionUser.id }});
 }
 
 export const getUser = async (sessionUser: User) => {
 	return await prisma.user.findUnique({
 		where: { id: sessionUser.id },
-		include: { apps: true, sessions: true, accounts: true },
+		include: { apps: true, machines: true, sessions: true, accounts: true },
 	});
 }
 

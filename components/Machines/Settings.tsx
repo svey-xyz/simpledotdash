@@ -50,14 +50,14 @@ export const Settings = ({ handleUpdate, appID, callback }: Props) => {
 			UpdatedApp[key] = value;
 		});
 
-		updateApp(UpdatedApp as App, user.id).then(() => {
-			if (callback) callback()
-		})
+		// updateApp(UpdatedApp as App, user.id).then(() => {
+		// 	if (callback) callback()
+		// })
 	}
 
 	const removeApp = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		e.stopPropagation();
-		await deleteApp(app)
+		// await deleteApp(app)
 		if (callback) callback()
 	}
 

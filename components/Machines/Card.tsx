@@ -1,5 +1,5 @@
 import React from "react";
-import { Machine } from "@lib/data.schema";
+import { Machine } from "@prisma/server/data.schema";
 
 type Props = {
 	machine: Machine

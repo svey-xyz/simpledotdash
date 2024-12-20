@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
 import DiscordProvider from "next-auth/providers/discord";
 import prisma from "@lib/db";
-import { Prisma, PrismaClient } from "@prisma/client"
+import { Prisma, PrismaClient } from "@prisma/server/data.schema"
 import { Adapter, AdapterAccount } from "next-auth/adapters";
 import { OAuthConfig } from "next-auth/providers/oauth";
 

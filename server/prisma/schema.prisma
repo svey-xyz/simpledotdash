@@ -1,9 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
-	output   = "../../lib/data.schema"
+	output   = "./data.schema"
 }
 
 datasource db {
@@ -12,9 +10,12 @@ datasource db {
 }
 
 model Settings {
-	id Int @id @unique @default(0)
-	title String @unique
-	icon String?
+	id   		String @id @unique @default(cuid())
+	title 	String @unique
+	icon 		String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }
 
 model App {
@@ -26,13 +27,38 @@ model App {
 	icon String?
 	taxonomies Taxonomy[]
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-	machine Machine @relation(fields: [machineId], references: [id])
+	machine Machine? @relation(fields: [machineId], references: [id])
 	machineId String
 
+	cluster Cluster? @relation(fields: [clusterId], references: [id])
+	clusterId String
+
 	@@map("apps")
+}
+
+model MachineCluster {
+  machineId String
+  clusterId String
+
+  machine Machine @relation(fields: [machineId], references: [id], onDelete: Cascade)
+  cluster Cluster @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+
+  @@id([machineId, clusterId]) // Composite key to avoid duplicates
+  @@map("machine_clusters")
+}
+
+model Cluster {
+	id String @id @unique @default(cuid())
+	title String
+	description String?
+
+	machines MachineCluster[]
+	apps App[]
+
+	@@map("clusters")
 }
 
 model Machine {
@@ -42,15 +68,17 @@ model Machine {
 	dashboardURL String?
 	description String?
 
-	user User @relation(fields: [userId], references: [id])
+	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
 	apps App[]
+	clusters MachineCluster[]
+
 	@@map("machines")
 }
 
 model Taxonomy {
-	id String @id @default(cuid())
+	id String @id @unique @default(cuid())
 	title String
 	description String?
 	apps App[]
@@ -70,6 +98,7 @@ model User {
   sessions      Session[]
   apps 					App[]
 	machines 			Machine[]
+	settings      Settings?
 
 	@@map(name: "users")
 }
@@ -81,7 +110,7 @@ model Session {
   sessionToken String   @unique
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-	@@map("seessions")
+	@@map("sessions")
 }
 
 model Account {

@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { PrismaClient, Prisma } from '@prisma/server/data.schema'
 
 // PrismaClient is attached to the `global` object in development to prevent
 // exhausting your database connection limit.
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 export default prisma;
 
 const userWithObjects = Prisma.validator<Prisma.UserDefaultArgs>()({
-	include: { apps: true, sessions: true, accounts: true },
+	include: { apps: true, machines: true, sessions: true, accounts: true },
 })
 
 export type UserWithObjects = Prisma.UserGetPayload<typeof userWithObjects>
