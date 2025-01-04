@@ -1,42 +1,41 @@
-
 generator client {
   provider = "prisma-client-js"
-	output   = "./data.schema"
+  output   = "./data.schema"
 }
 
 datasource db {
   provider = "sqlite"
-	url = "file:../data/prisma.db"
+  url      = "file:../data/prisma.db"
 }
 
 model Settings {
-	id   		String @id @unique @default(cuid())
-	title 	String @unique
-	icon 		String?
+  id    String  @id @unique @default(cuid())
+  title String  @unique
+  icon  String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 }
 
 model App {
-  id String @id @unique @default(cuid())
-  title String
-  url String
-	displayURL String?
+  id          String     @id @unique @default(cuid())
+  title       String
+  url         String
+  displayURL  String?
   description String?
-	icon String?
-	taxonomies Taxonomy[]
+  icon        String?
+  taxonomies  Taxonomy[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-	machine Machine? @relation(fields: [machineId], references: [id])
-	machineId String
+  machine   Machine? @relation(fields: [machineId], references: [id])
+  machineId String
 
-	cluster Cluster? @relation(fields: [clusterId], references: [id])
-	clusterId String
+  cluster   Cluster? @relation(fields: [clusterId], references: [id])
+  clusterId String
 
-	@@map("apps")
+  @@map("apps")
 }
 
 model MachineCluster {
@@ -51,47 +50,53 @@ model MachineCluster {
 }
 
 model Cluster {
-	id String @id @unique @default(cuid())
-	title String
-	description String?
+  id          String     @id @unique @default(cuid())
+  title       String
+  description String?
+  taxonomies  Taxonomy[]
 
-	machines MachineCluster[]
-	apps App[]
+  machines MachineCluster[]
+  apps     App[]
 
-	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-	@@map("clusters")
+  @@map("clusters")
 }
 
 model Machine {
-	id String @id @unique @default(cuid())
-	title String
-	ip String
-	physical Boolean
-	dashboardURL String?
-	description String?
+  id           String     @id @unique @default(cuid())
+  title        String
+  ip           String
+  physical     Boolean
+  dashboardURL String?
+  description  String?
+  taxonomies   Taxonomy[]
 
-	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-	apps App[]
-	clusters MachineCluster[]
+  apps     App[]
+  clusters MachineCluster[]
 
-	@@map("machines")
+  @@map("machines")
 }
 
 model Taxonomy {
-	id String @id @unique @default(cuid())
-	title String
-	description String?
-	apps App[]
+  id          String   @id @unique @default(cuid())
+  title       String
+  description String?
+  apps        App[]
+  Cluster     Cluster? @relation(fields: [clusterId], references: [id])
+  clusterId   String?
+  Machine     Machine? @relation(fields: [machineId], references: [id])
+  machineId   String?
 
-	@@map("taxonomies")
+  @@map("taxonomies")
 }
 
 model User {
-	id            String    @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -100,38 +105,38 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
-  apps 					App[]
-	machines 			Machine[]
-	clusters			Cluster[]
-	settings      Settings?
+  apps          App[]
+  machines      Machine[]
+  clusters      Cluster[]
+  settings      Settings?
 
-	@@map(name: "users")
+  @@map(name: "users")
 }
 
 model Session {
   id           String   @id @default(cuid())
-  userId       String 	@map("user_id")
+  userId       String   @map("user_id")
   expires      DateTime
   sessionToken String   @unique
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-	@@map("sessions")
+  @@map("sessions")
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? 
-  access_token       String? 
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? 
-  session_state      String?
- 
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
